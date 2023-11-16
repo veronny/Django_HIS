@@ -1,0 +1,32 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+<main class="container">
+  <div class="display-1 text-center py-3">
+    <h2>CERTIFICADO DE DISCAPACIDAD</h2>
+  </div>
+
+<!-- BUSCADOR -->
+<section class = "card card-body shadow mb-2">
+  <form method="GET" enctype="multipart/form-data" action="{% url 'reporte' %}">      
+    <div class = "form row">
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <label for="anio">Fecha de Inicio:</label>
+        <input class="form-control form-select-sm" type="date" id="fecha_inicio" name="fecha_inicio">
+      </div>  
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <label class="form-inline" for="mes">Fecha de Fin:</label>
+        <input class="form-control form-select-sm" type="date" id="fecha_fin" name="fecha_fin">
+      </div>  
+      <div class="col-sm-12 col-md-6 col-lg-2">
+        <br>
+        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-play-circle"></i> Procesar Información</button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<!------------->  
+</main>
+{% endblock %}

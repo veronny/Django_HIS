@@ -146,3 +146,5 @@ os.makedirs(STATIC_TMP, exist_ok=True)
 os.makedirs(STATIC_ROOT, exist_ok=True)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# visitas 
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30  # 30 días

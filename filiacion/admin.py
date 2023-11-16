@@ -2,7 +2,8 @@ from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
 from django.contrib import admin
-from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento
+from django.contrib.auth.models import Permission
+from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD
 
 # Register your models here.
 
@@ -160,3 +161,55 @@ class DirectorioEstablecimientoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         'cuenta_usuario'
     )
     search_fields = ('nombres',)
+    
+###################################################### 
+#-------------- PAPELETA DE SALIDA HORAS ----------------------
+class RptCertificadoResources(resources.ModelResource):
+    class Meta:
+        model = rpt_certificado
+
+@admin.register(rpt_certificado)
+class RptCertificadoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = RptCertificadoResources
+    list_display = (                                                          
+                    'Anio',
+                    'Mes',
+                    'Dia',
+                    'Fecha_Atencion',
+                    'Codigo_Red',
+                    'Red',
+                    'Codigo_MicroRed',
+                    'MicroRed',
+                    'Codigo_Unico',
+                    'Nombre_Establecimiento',
+                    'Id_Establecimiento',
+                    'DIS_EVALUACION',
+                    'DIS_CALIFICACION',
+                    'DIS_LEV',
+                    'DIS_MOD',
+                    'DIS_SEV',
+                    'DIS_TOTAL'
+    )
+    search_fields = ('id','Red','MicroRed','Nombre_Establecimiento','DIS_EVALUACION','DIS_CALIFICACION','DIS_LEV','DIS_MOD','DIS_SEV','DIS_TOTAL',)    
+
+###################################################### 
+#-------------- PAPELETA DE SALIDA HORAS ----------------------
+class ActualizaBDResources(resources.ModelResource):
+    class Meta:
+        model = ActualizaBD
+
+@admin.register(ActualizaBD)
+class ActualizaBDAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = ActualizaBDResources
+    list_display = (                                                          
+                    'fecha_plano', 
+                    'hora_plano',
+                    'fecha_paciente',
+                    'hora_paciente',
+                    'fecha_personal',
+                    'hora_personal',
+                    'fecha_padron',
+                    'hora_padron',
+                    'fecha_certificado',
+                    'hora_certificado'
+    )   

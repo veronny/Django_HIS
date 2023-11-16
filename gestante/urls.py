@@ -7,6 +7,8 @@ from filiacion import views
 # Subir archivos estaticos
 from django.conf import settings
 from django.conf.urls.static import static
+# Reporte excel
+from filiacion.views import home, ReportePersonalizadoExcel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +39,11 @@ urlpatterns = [
     path('frontend_directorio_diresa/', views.frontend_directorio_diresa, name='frontend_directorio_diresa'),
     path('frontend_directorio_red/', views.frontend_directorio_red, name='frontend_directorio_red'),
     path('frontend_directorio_establecimiento/', views.frontend_directorio_establecimiento, name='frontend_directorio_establecimiento'),
+    
+    path('rpt_discapacidad/', views.listar_rpt_discapacidad, name='rpt_discapacidad'),
+    path('reporte/', ReportePersonalizadoExcel.as_view(), name = 'reporte')
+    
+    
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

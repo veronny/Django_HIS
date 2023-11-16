@@ -1,50 +1,152 @@
 {% load static %}
+
+<style>
+.dropdown .dropdown-menu{
+  display:none;
+}
+
+.dropdown:hover > .dropdown-menu, .dropend:hover > .dropdown-menu{
+  display: block;
+  margin-top: .125em;
+  margin-left: .125em;
+}
+
+.dropend .dropdown-toggle{
+  color:  #EC8F5E;
+  margin-left: .5em;
+}
+
+.dropdown-item:hover {
+  background-color: #EC8F5E; 
+  color: #fff;
+}
+@media screen and (min-width: 768px) {
+  .dropend:hover > .dropdown-menu{
+    position: absolute;
+    top: 0;
+    left: 100%;
+  }
+}
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <img src="{% static 'img/logo_2.png' %}" width="35" height="35">
-    <a class="navbar-brand" href="/">&nbsp;Sistema de Padron Nominal</a>
+    <a class="navbar-brand" href="/">&nbsp;ReportWeb HIS Junin</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
+      {% if perms.filiacion.view_filiacion and user.is_authenticated %}
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- General Header -->
+        <li class="nav-item dropdown">
+          <!-- Cabecera -->
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-hospital"></i> GENERAL
+          </a>
+          <!-- Menu -->
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a class="dropdown-item" href="#"><i class="fa fa-user-md"></i> Atendidos & Atenciones</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#"><i class="fa fa-stethoscope"></i> Morbilidad</a></li>
+          </ul>
+        </li>
+        <!-- Fin General Header -->
+
+        <!-- Estrategias Header -->
+        <li class="nav-item dropdown">
+          <!-- Cabecera -->
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-medkit"></i> ESTRATEGIAS 
+          </a>
+          <!-- Menu -->
+          <ul class="dropdown-menu dropdown-menu-right">
+            <!-- Menu Discapacidad -->
+            <li class="nav-item dropend">
+              <!-- Cabecera -->
+              <a class="nav-link dropdown-toggle text-body" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-wheelchair"></i> Discapacidad
+              </a>
+              <!-- Menu -->
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="rpt_discapacidad">Certificados de Discapacidad</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Visitas Domiciliarias</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Visitas Domiciliarias (Seguimiento)</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Atencion de Rehabilitacion a Pacientes con Discapacidad</a></li>
+              </ul>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <!-- Menu Promocion de la Salud-->
+            <li class="nav-item dropend">
+              <!-- Cabecera -->
+              <a class="nav-link dropdown-toggle text-body" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-heartbeat"></i> Promocion de la Salud
+              </a>
+              <!-- Menu -->
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Programas PROMSA</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Nominal Programas PROMSA</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <!-- Fin Estrategias Header -->
+
+        <!-- General Header -->
+        <li class="nav-item dropdown">
+          <!-- Cabecera -->
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-child"></i> PADRON NOMINAL </a>
+          </a>
+          <!-- Menu -->
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a class="dropdown-item" href="#"><i class="fa fa-database"></i> Descarga BD</a></li>
+          </ul>
+        </li>
+        <!-- Fin General Header -->
+
+        <!-- General Header -->
+        <li class="nav-item dropdown">
+          <!-- Cabecera -->
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-book"></i> MANUALES HIS </a>
+          </a>
+          <!-- Menu -->
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a class="dropdown-item" href="#">(2023) Prevencion y Control de la Discapacidad</a></li>
+            <hr class="hr" />
+            <li><a class="dropdown-item" href="#">(2022) Actividades de Promocion de la Salud</a></li>
+          </ul>
+        </li>
+        <!-- Fin General Header -->
+      </ul>
+      {% endif %}
+
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
           <a href="/" class="nav-link">Inicio</a>
-        </li>
-          {% if perms.filiacion.view_filiacion and user.is_authenticated %}
-          <li class="nav-item">
-            <a href="/filiacion" class="nav-link">Dir. Municipios</a>
-          </li>
-          {% endif %}
-          {% if perms.filiacion.view_red and user.is_authenticated %}  
-          <li class="nav-item">
-            <a href="/directorio_salud" class="nav-link">Dir. Diresa</a>
-          </li>
-          {% endif %}
-          {% if perms.filiacion.view_red and user.is_authenticated %}
-          <li class="nav-item">
-            <a href="/directorio_red" class="nav-link">Dir. Redes</a>
-          </li>
-          {% endif %}
-          {% if perms.filiacion.view_establecimiento and user.is_authenticated %}
-          <li class="nav-item">
-            <a href="/directorio_establecimiento" class="nav-link">Dir. Establecimientos</a>
-          </li>
-          {% endif %}
-          {% if user.is_authenticated %}
+        </li> 
+        {% if user.is_authenticated %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-user-circle"></i> {{ user.username }}</a>
               <ul class="dropdown-menu dropdown-menu-right">
                 <li><a class="dropdown-item" href="/logout"> Salir</a></li>
               </ul>
           </li>    
-          {% else %}
+        {% else %}
           <li class="nav-item">
             <a href="/signin" class="nav-link" >Ingresar</a>
           </li>
         {% endif %}
       </ul>
     </div>
+  
   </div>
 </nav>

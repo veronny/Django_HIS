@@ -215,3 +215,44 @@ class DirectorioEstablecimiento(models.Model):
     
     def __str__(self):
         return self.nombres
+
+class Visita(models.Model):
+    # Otros campos de tu modelo
+    visitas = models.PositiveIntegerField(default=0)
+
+class ActualizaBD(models.Model):
+    fecha_plano = models.CharField(max_length=100,null=True, blank=True)
+    hora_plano = models.CharField(max_length=100,null=True, blank=True)
+    fecha_paciente = models.CharField(max_length=100,null=True, blank=True)
+    hora_paciente = models.CharField(max_length=100,null=True, blank=True)
+    fecha_personal = models.CharField(max_length=100,null=True, blank=True)
+    hora_personal = models.CharField(max_length=100,null=True, blank=True)
+    fecha_padron = models.CharField(max_length=100,null=True, blank=True)
+    hora_padron = models.CharField(max_length=100,null=True, blank=True)
+    fecha_certificado = models.CharField(max_length=100,null=True, blank=True)
+    hora_certificado = models.CharField(max_length=100,null=True, blank=True)
+#################################################
+###  CETIFICACIONES
+################################################
+
+class rpt_certificado(models.Model):
+    Anio = models.CharField(max_length=200,null=True, blank=True)
+    Mes = models.CharField(max_length=200,null=True, blank=True)
+    Dia = models.CharField(max_length=200,null=True, blank=True)
+    Fecha_Atencion =  models.DateField(max_length=100,null=True, blank=True)
+    Codigo_Red = models.CharField(max_length=200,null=True, blank=True)
+    Red = models.CharField(max_length=200,null=True, blank=True)
+    Codigo_MicroRed = models.CharField(max_length=200,null=True, blank=True)
+    MicroRed = models.CharField(max_length=200,null=True, blank=True)
+    Codigo_Unico = models.CharField(max_length=200,null=True, blank=True)
+    Nombre_Establecimiento = models.CharField(max_length=200,null=True, blank=True)
+    Id_Establecimiento = models.CharField(max_length=200,null=True, blank=True)
+    DIS_EVALUACION = models.IntegerField(blank=True, null=True)
+    DIS_CALIFICACION = models.IntegerField(blank=True, null=True)
+    DIS_LEV = models.IntegerField(blank=True, null=True)
+    DIS_MOD = models.IntegerField(blank=True, null=True)
+    DIS_SEV = models.IntegerField(blank=True, null=True)
+    DIS_TOTAL = models.IntegerField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.Id_Establecimiento
