@@ -3,7 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 
 from django.contrib import admin
 from django.contrib.auth.models import Permission
-from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD
+from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD, RptVisitaDis, RptSeguimientoVisitaDis
 
 # Register your models here.
 
@@ -163,7 +163,7 @@ class DirectorioEstablecimientoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     search_fields = ('nombres',)
     
 ###################################################### 
-#-------------- PAPELETA DE SALIDA HORAS ----------------------
+#-------------- REPORTE DE DISCAPACIDAD --------------
 class RptCertificadoResources(resources.ModelResource):
     class Meta:
         model = rpt_certificado
@@ -193,7 +193,7 @@ class RptCertificadoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     search_fields = ('id','Red','MicroRed','Nombre_Establecimiento','DIS_EVALUACION','DIS_CALIFICACION','DIS_LEV','DIS_MOD','DIS_SEV','DIS_TOTAL',)    
 
 ###################################################### 
-#-------------- PAPELETA DE SALIDA HORAS ----------------------
+#-------------- ACTUALIZAR FECHAS --------------------
 class ActualizaBDResources(resources.ModelResource):
     class Meta:
         model = ActualizaBD
@@ -213,3 +213,59 @@ class ActualizaBDAdmin(ImportExportModelAdmin,admin.ModelAdmin):
                     'fecha_certificado',
                     'hora_certificado'
     )   
+###################################################### 
+#---- REPORTE DE VISITAS DE DISCAPACIDAD -------------
+class RptVisitaDisResources(resources.ModelResource):
+    class Meta:
+        model = RptVisitaDis
+
+@admin.register(RptVisitaDis)
+class RptVisitaDisAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = RptVisitaDisResources
+    list_display = (                                                          
+                    'Anio',
+                    'Mes',
+                    'Dia',
+                    'Fecha_Atencion',
+                    'Codigo_Red',
+                    'Red',
+                    'Codigo_MicroRed',
+                    'MicroRed',
+                    'Codigo_Unico',
+                    'Nombre_Establecimiento',
+                    'Id_Establecimiento',
+                    'VISITA_1',
+                    'VISITA_2',
+                    'VISITA_3',
+                    'VISITA_4'
+    )
+    search_fields = ('id','Red','MicroRed','Nombre_Establecimiento','VISITA_1','VISITA_2','VISITA_3','VISITA_4',)    
+
+###################################################### 
+#---- REPORTE DE SEGUIMIENTO VISITAS DE DISCAPACIDAD -------------
+class RptSeguimientoVisitaDisResources(resources.ModelResource):
+    class Meta:
+        model = RptSeguimientoVisitaDis
+
+@admin.register(RptSeguimientoVisitaDis)
+class RptSeguimientoVisitaDisAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = RptSeguimientoVisitaDisResources
+    list_display = (                                                          
+                    'Codigo_Red',
+                    'Red', 
+                    'Codigo_MicroRed',
+                    'MicroRed',
+                    'Codigo_Unico',
+                    'Nombre_Establecimiento',
+                    'Id_Establecimiento',
+                    'Numero_Documento_Paciente',
+                    'FECHA_VISITA_1', 
+                    'EESS_VISITA_1', 
+                    'FECHA_VISITA_2',	
+                    'EESS_VISITA_2',
+                    'FECHA_VISITA_3',	
+                    'EESS_VISITA_3',
+                    'FECHA_VISITA_4',	
+                    'EESS_VISITA_4'
+    )
+    search_fields = ('id','Red','MicroRed','Nombre_Establecimiento','FECHA_VISITA_1','EESS_VISITA_1','FECHA_VISITA_2','EESS_VISITA_2','FECHA_VISITA_3','EESS_VISITA_3','FECHA_VISITA_4','EESS_VISITA_4',)  

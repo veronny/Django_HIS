@@ -256,3 +256,46 @@ class rpt_certificado(models.Model):
     
     def __str__(self):
         return self.Id_Establecimiento
+    
+class RptVisitaDis(models.Model):
+    Anio = models.CharField(max_length=200,null=True, blank=True)
+    Mes = models.CharField(max_length=200,null=True, blank=True)
+    Dia = models.CharField(max_length=200,null=True, blank=True)
+    Fecha_Atencion =  models.DateField(max_length=100,null=True, blank=True)
+    Codigo_Red = models.CharField(max_length=200,null=True, blank=True)
+    Red = models.CharField(max_length=200,null=True, blank=True)
+    Codigo_MicroRed = models.CharField(max_length=200,null=True, blank=True)
+    MicroRed = models.CharField(max_length=200,null=True, blank=True)
+    Codigo_Unico = models.CharField(max_length=200,null=True, blank=True)
+    Nombre_Establecimiento = models.CharField(max_length=200,null=True, blank=True)
+    Id_Establecimiento = models.CharField(max_length=200,null=True, blank=True)
+    VISITA_1 = models.IntegerField(blank=True, null=True)
+    VISITA_2 = models.IntegerField(blank=True, null=True)
+    VISITA_3 = models.IntegerField(blank=True, null=True)
+    VISITA_4 = models.IntegerField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.Id_Establecimiento
+
+
+class RptSeguimientoVisitaDis(models.Model):
+    Codigo_Red = models.CharField(max_length=200,null=True, blank=True)
+    Red = models.CharField(max_length=200,null=True, blank=True)
+    Codigo_MicroRed = models.CharField(max_length=200,null=True, blank=True)
+    MicroRed = models.CharField(max_length=200,null=True, blank=True)
+    Codigo_Unico = models.CharField(max_length=200,null=True, blank=True)
+    Nombre_Establecimiento = models.CharField(max_length=200,null=True, blank=True)
+    Id_Establecimiento = models.CharField(max_length=200,null=True, blank=True)
+    Numero_Documento_Paciente = models.CharField(max_length=200,null=True, blank=True)
+    FECHA_VISITA_1 = models.DateField(max_length=100,null=True, blank=True)
+    EESS_VISITA_1 =	models.CharField(max_length=200,null=True, blank=True)
+    FECHA_VISITA_2 = models.DateField(max_length=100,null=True, blank=True)	
+    EESS_VISITA_2 =	models.CharField(max_length=200,null=True, blank=True)
+    FECHA_VISITA_3 = models.DateField(max_length=100,null=True, blank=True)	
+    EESS_VISITA_3 =	models.CharField(max_length=200,null=True, blank=True)
+    FECHA_VISITA_4 = models.DateField(max_length=100,null=True, blank=True)	
+    EESS_VISITA_4 = models.CharField(max_length=200,null=True, blank=True)
+
+    def __str__(self):
+        return self.Id_Establecimiento
+

@@ -8,7 +8,7 @@ from filiacion import views
 from django.conf import settings
 from django.conf.urls.static import static
 # Reporte excel
-from filiacion.views import home, ReportePersonalizadoExcel
+from filiacion.views import home, ReportePersonalizadoExcel, RptVistaDisExcel, RptSeguimientoVistaDisExcel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,11 +39,17 @@ urlpatterns = [
     path('frontend_directorio_diresa/', views.frontend_directorio_diresa, name='frontend_directorio_diresa'),
     path('frontend_directorio_red/', views.frontend_directorio_red, name='frontend_directorio_red'),
     path('frontend_directorio_establecimiento/', views.frontend_directorio_establecimiento, name='frontend_directorio_establecimiento'),
-    
+    #################################################################################
+    ######## MODULO DE DISCAPACIDAD #################################################
+    #################################################################################
     path('rpt_discapacidad/', views.listar_rpt_discapacidad, name='rpt_discapacidad'),
-    path('reporte/', ReportePersonalizadoExcel.as_view(), name = 'reporte')
-    
-    
+    path('reporte/', ReportePersonalizadoExcel.as_view(), name = 'reporte'),
+    # VISITAS DISCAPACIDAD
+    path('rpt_visita_dis/', views.listar_rpt_visita_dis, name='rpt_visita_dis'),
+    path('reporte_visita_dis/', RptVistaDisExcel.as_view(), name = 'reporte_visita_dis'),
+    # SEGUIMIENTO VISITAS DISCAPACIDAD
+    path('rpt_seguimiento_visita_dis/', views.listar_rpt_seguimiento_visita_dis, name='rpt_seguimiento_visita_dis'),
+    path('reporte_seguimiento_visita_dis/', RptSeguimientoVistaDisExcel.as_view(), name = 'reporte_seguimiento_visita_dis')
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

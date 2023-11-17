@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 from .forms import FiliacionForm, DirectorioForm, DirectorioRedForm, DirectorioEstablecimientoForm
-from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento, Provincia, Distrito, Red, Microred, Establecimiento, rpt_certificado, ActualizaBD
+from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento, Provincia, Distrito, Red, Microred, Establecimiento, rpt_certificado, ActualizaBD,RptVisitaDis,RptSeguimientoVisitaDis
 from django.db.models import Q
 
 # report excel
@@ -592,6 +592,532 @@ class ReportePersonalizadoExcel(TemplateView):
         #Respuesta de Django
         #Establecer el nombre del archivo
         nombre_archivo = "rpt_discapacidad.xlsx"
+        #Definir el tipo de respuesta que se va a dar
+        response = HttpResponse(content_type = "application/ms-excel")
+        contenido = "attachment; filename = {0}".format(nombre_archivo)
+        response["Content-Disposition"] = contenido
+        wb.save(response)
+        return response
+
+#############################################
+# ----- RPT VISITA  --------------------
+#############################################
+@login_required
+def listar_rpt_visita_dis(request):
+    
+    # Obtener el filtro de mes y año del parámetro GET
+    # Obtener todas las marcaciones o filtrar por mes/año
+    return render(request, 'rpt_discapacidad/rpt_visita_dis.html')
+
+class RptVistaDisExcel(TemplateView):
+    def get(self,request,*args,**kwargs):
+        # creacion de la consulta
+        fecha_inicio = request.GET.get('fecha_inicio')
+        fecha_fin = request.GET.get('fecha_fin')
+        query = RptVisitaDis.objects.filter(Fecha_Atencion__range=[fecha_inicio, fecha_fin]).order_by('Red','MicroRed','Nombre_Establecimiento')
+
+        # creacion de archivo
+        wb = Workbook() #crea libro de trabajo
+        ws = wb.active #Primera hoja
+
+        # crea titulo del reporte
+        ws['A1'].alignment = Alignment(horizontal= "center", vertical="center")
+        ws['A1'].font = Font(name = 'Arial', size= 14, bold = True)
+        ws['A1'] = 'REPORTE DE VISITA DOMICILIARIA A PACIENTES CON DISCAPACIDAD'
+        # cambina celdas
+        ws.merge_cells('A1:J1')
+
+        ws['B3'].alignment = Alignment(horizontal= "left", vertical= "center")
+        ws['B3'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B3'].font = Font(name = 'Arial', size= 8)
+        ws['B3'] = 'Fecha Inicio'
+        
+        ws['C3'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C3'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['C3'].font = Font(name = 'Arial', size= 8)
+        ws['C3'].value = fecha_inicio
+    
+        ws['B4'].alignment = Alignment(horizontal= "left", vertical= "center")
+        ws['B4'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B4'].font = Font(name = 'Arial', size= 8)
+        ws['B4'] = 'Fecha Fin'
+        
+        ws['C4'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C4'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['C4'].font = Font(name = 'Arial', size= 8)
+        ws['C4'].number_format = "dd-mm-yyyy"
+        ws['C4'].value = fecha_fin
+        
+        # cambia el alto de la columna
+        ws.row_dimensions[1].height = 25
+        # cambia el ancho de la columna
+        ws.column_dimensions['B'].width = 23
+        ws.column_dimensions['C'].width = 25
+        ws.column_dimensions['D'].width = 14
+        ws.column_dimensions['E'].width = 32
+        ws.column_dimensions['F'].width = 10
+        ws.column_dimensions['G'].width = 10
+        ws.column_dimensions['H'].width = 10
+        ws.column_dimensions['I'].width = 10
+        # linea de division
+        ws.freeze_panes = 'AL8'
+
+        # crea cabecera
+        ws['B6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['B6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['B6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['B6'] = 'RED'
+        ws.merge_cells('B6:B7')
+
+        ws['C6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['C6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['C6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['C6'] = 'MICRORED'
+        ws.merge_cells('C6:C7')
+
+        ws['D6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['D6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['D6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['D6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['D6'] = 'COD ESTABLEC'
+        ws.merge_cells('D6:D7')
+
+        ws['E6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['E6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['E6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['E6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['E6'] = 'NOMBRE ESTABLECIMIENTO'
+        ws.merge_cells('E6:E7')
+
+        ws['F6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['F6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['F6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['F6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['F6'] = '1° VISITA'
+        ws.merge_cells('F6:F7')
+
+        ws['G6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['G6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['G6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['G6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['G6'] = '2° VISITA'
+        ws.merge_cells('G6:G7')
+        # celda 
+        ws['H6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['H6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['H6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['H6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['H6'] = '3° VISITA'
+        ws.merge_cells('H6:H7')
+        # celda 
+        ws['I6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['I6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['I6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['I6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['I6'] = '4° VISITA'
+        ws.merge_cells('I6:I7')
+        # celda 
+
+        # Pintamos los datos del reporte - RED
+        cont = 8       
+        for q in query:   
+            ws.cell(row = cont , column=2).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=2).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=2).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column=2).value = q.Red
+
+            ws.cell(row = cont , column=3).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=3).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=3).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column=3).value = q.MicroRed
+            
+            ws.cell(row = cont , column=4).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=4).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=4).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 4).value = q.Codigo_Unico
+            
+            ws.cell(row = cont , column=5).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=5).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=5).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 5).value = q.Nombre_Establecimiento
+            
+            ws.cell(row = cont , column=6).alignment = Alignment(horizontal="right")
+            ws.cell(row = cont , column=6).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=6).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 6).value = q.VISITA_1
+            
+            ws.cell(row = cont , column=7).alignment = Alignment(horizontal="right")
+            ws.cell(row = cont , column=7).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=7).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 7).value = q.VISITA_2
+            
+            ws.cell(row = cont , column=8).alignment = Alignment(horizontal="right")
+            ws.cell(row = cont , column=8).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=8).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 8).value = q.VISITA_3
+            
+            ws.cell(row = cont , column=9).alignment = Alignment(horizontal="right")
+            ws.cell(row = cont , column=9).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=9).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 9).value = q.VISITA_4
+                     
+            cont+=1
+
+                
+        #Respuesta de Django
+        #Establecer el nombre del archivo
+        nombre_archivo = "rpt_visita_dis.xlsx"
+        #Definir el tipo de respuesta que se va a dar
+        response = HttpResponse(content_type = "application/ms-excel")
+        contenido = "attachment; filename = {0}".format(nombre_archivo)
+        response["Content-Disposition"] = contenido
+        wb.save(response)
+        return response
+
+#############################################
+# ----- RPT SEGUMIENTO VISITA  --------------
+#############################################
+@login_required
+def listar_rpt_seguimiento_visita_dis(request):
+    
+    # Obtener el filtro de mes y año del parámetro GET
+    # Obtener todas las marcaciones o filtrar por mes/año
+    return render(request, 'rpt_discapacidad/rpt_seguimiento_visita_dis.html')
+
+class RptSeguimientoVistaDisExcel(TemplateView):
+    def get(self,request,*args,**kwargs):
+        # creacion de la consulta
+        fecha_inicio = request.GET.get('fecha_inicio')
+        fecha_fin = request.GET.get('fecha_fin')
+        query = RptSeguimientoVisitaDis.objects.filter(FECHA_VISITA_1__range=[fecha_inicio, fecha_fin]).order_by('Red','MicroRed','Nombre_Establecimiento')
+
+        # creacion de archivo
+        wb = Workbook() #crea libro de trabajo
+        ws = wb.active #Primera hoja
+
+        # crea titulo del reporte
+        ws['A1'].alignment = Alignment(horizontal= "center", vertical="center")
+        ws['A1'].font = Font(name = 'Arial', size= 14, bold = True)
+        ws['A1'] = 'REPORTE DE SEGUIMIENTO VISITA DOMICILIARIA A PACIENTES CON DISCAPACIDAD'
+        # cambina celdas
+        ws.merge_cells('A1:J1')
+
+        ws['B3'].alignment = Alignment(horizontal= "left", vertical= "center")
+        ws['B3'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B3'].font = Font(name = 'Arial', size= 8)
+        ws['B3'] = 'Fecha Inicio'
+        
+        ws['C3'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C3'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['C3'].font = Font(name = 'Arial', size= 8)
+        ws['C3'].value = fecha_inicio
+    
+        ws['B4'].alignment = Alignment(horizontal= "left", vertical= "center")
+        ws['B4'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B4'].font = Font(name = 'Arial', size= 8)
+        ws['B4'] = 'Fecha Fin'
+        
+        ws['C4'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C4'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['C4'].font = Font(name = 'Arial', size= 8)
+        ws['C4'].number_format = "dd-mm-yyyy"
+        ws['C4'].value = fecha_fin
+        
+        # cambia el alto de la columna
+        ws.row_dimensions[1].height = 25
+        # cambia el ancho de la columna
+        ws.column_dimensions['B'].width = 10
+        ws.column_dimensions['C'].width = 10
+        ws.column_dimensions['D'].width = 39
+        ws.column_dimensions['E'].width = 10
+        ws.column_dimensions['F'].width = 39
+        ws.column_dimensions['G'].width = 10
+        ws.column_dimensions['H'].width = 39
+        ws.column_dimensions['I'].width = 10
+        ws.column_dimensions['J'].width = 39
+        # linea de division
+        ws.freeze_panes = 'AL8'
+
+        # crea cabecera
+        ws['B6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['B6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['B6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['B6'] = 'DNI'
+        ws.merge_cells('B6:B7')
+
+        ws['C6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['C6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['C6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['C6'] = '1° VISITA'
+        ws.merge_cells('C6:D6')
+        
+        ws['C7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C7'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['C7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['C7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['C7'] = 'FECHA'
+
+        ws['D7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['D7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['D7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['D7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['D7'] = 'ESTABLECIMIENTO'
+        ##
+        ws['E6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['E6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['E6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['E6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['E6'] = '2° VISITA'
+        ws.merge_cells('E6:F6')
+        
+        ws['E7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['E7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['E7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['E7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['E7'] = 'FECHA'
+
+
+        ws['F7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['F7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['F7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['F7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['F7'] = 'ESTABLECIMIENTO'
+
+        ws['G6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['G6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['G6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['G6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['G6'] = '3° VISITA'
+        ws.merge_cells('G6:H6')
+        
+        ws['G7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['G7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['G7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['G7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['G7'] = 'FECHA'
+        # celda 
+        ws['H7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['H7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['H7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['H7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['H7'] = 'ESTABLECIMIENTO'
+        # celda 
+        ws['I6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['I6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['I6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['I6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['I6'] = '4° VISITA'
+        ws.merge_cells('I6:J6')
+        
+        
+        ws['I7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['I7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['I7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['I7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['I7'] = 'FECHA'
+        # celda 
+        ws['J7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['J7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['J7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['J7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['J7'] = 'ESTABLECIMIENTO'
+
+        # Pintamos los datos del reporte - RED
+        cont = 8       
+        for q in query:   
+            ws.cell(row = cont , column=2).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=2).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=2).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column=2).value = q.Numero_Documento_Paciente
+
+            ws.cell(row = cont , column=3).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=3).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=3).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column=3).value = q.FECHA_VISITA_1
+            
+            ws.cell(row = cont , column=4).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=4).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=4).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 4).value = q.EESS_VISITA_1
+            
+            ws.cell(row = cont , column=5).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=5).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=5).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 5).value = q.FECHA_VISITA_2
+            
+            ws.cell(row = cont , column=6).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=6).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=6).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 6).value = q.EESS_VISITA_2
+            
+            ws.cell(row = cont , column=7).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=7).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=7).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 7).value = q.FECHA_VISITA_3
+            
+            ws.cell(row = cont , column=8).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=8).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=8).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 8).value = q.EESS_VISITA_3
+            
+            ws.cell(row = cont , column=9).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=9).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=9).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 9).value = q.FECHA_VISITA_4
+            
+            ws.cell(row = cont , column=10).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=10).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=10).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 10).value = q.EESS_VISITA_4
+            
+            cont+=1
+
+                
+        #Respuesta de Django
+        #Establecer el nombre del archivo
+        nombre_archivo = "rpt_seguimiento_visita_dis.xlsx"
         #Definir el tipo de respuesta que se va a dar
         response = HttpResponse(content_type = "application/ms-excel")
         contenido = "attachment; filename = {0}".format(nombre_archivo)
