@@ -2,13 +2,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from filiacion import views 
 # Subir archivos estaticos
-from django.conf import settings
 from django.conf.urls.static import static
 # Reporte excel
-from filiacion.views import home, ReportePersonalizadoExcel, RptVistaDisExcel, RptSeguimientoVistaDisExcel
+from filiacion.views import home, ReportePersonalizadoExcel, RptVistaDisExcel, RptSeguimientoVistaDisExcel, RptDiscapacidad2,FrmRedView
+# Formularios
+from filiacion.views import FrmMicroredView,FrmEstablecimientoView,form_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,7 +50,16 @@ urlpatterns = [
     path('reporte_visita_dis/', RptVistaDisExcel.as_view(), name = 'reporte_visita_dis'),
     # SEGUIMIENTO VISITAS DISCAPACIDAD
     path('rpt_seguimiento_visita_dis/', views.listar_rpt_seguimiento_visita_dis, name='rpt_seguimiento_visita_dis'),
-    path('reporte_seguimiento_visita_dis/', RptSeguimientoVistaDisExcel.as_view(), name = 'reporte_seguimiento_visita_dis')
+    path('reporte_seguimiento_visita_dis/', RptSeguimientoVistaDisExcel.as_view(), name = 'reporte_seguimiento_visita_dis'),
+    # OPERACIONAL DISCAPACIDAD
+    path('tipo_reporte/', views.TipoReporte, name='tipo_reporte'),
+    path('rpt_operacional_dis/', RptDiscapacidad2.as_view(), name='rpt_operacional_dis'),
+    
+    path('frm_red/', FrmRedView.as_view(), name='frm_red'),
+    path('frm_microred/', FrmMicroredView.as_view(), name='frm_microred'),
+    path('frm_establecimiento/', FrmEstablecimientoView.as_view(), name='frm_establecimiento'),
+    
+    path('form/<str:form_type>/', form_view, name='form_view'),
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

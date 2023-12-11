@@ -1,0 +1,10 @@
+{% for error in form.errors %}
+    {{ error }}
+{% endfor %}
+
+<form method="post" action="">
+    muestra formulario
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>

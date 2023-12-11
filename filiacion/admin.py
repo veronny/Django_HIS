@@ -3,7 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 
 from django.contrib import admin
 from django.contrib.auth.models import Permission
-from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD, RptVisitaDis, RptSeguimientoVisitaDis
+from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD, RptVisitaDis, RptSeguimientoVisitaDis, TipoReporte
 
 # Register your models here.
 
@@ -12,67 +12,6 @@ class RedResources(resources.ModelResource):
     class Meta:
         model = Red
 
-@admin.register(Red)
-class RedAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    resource_class = RedResources
-    list_display = (
-        'id',
-        'nombre_red',
-        'cod_red',
-    )
-    search_fields = ('nombre_red',)
-
-# Red
-admin.site.register(Microred)
-
-#-----------Establecimiento--------------------
-class EstablecimientoResources(resources.ModelResource):
-    class Meta:
-        model = Establecimiento
-
-@admin.register(Establecimiento)
-class EstablecimientoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    resource_class = EstablecimientoResources
-    list_display = (
-        'id',
-        'nombre_establecimiento',
-        'codigo_unico',
-        'red',
-        'microred',
-    )
-    search_fields = ('nombre_establecimiento',)
-    
-#---------Provincia----------------------------  
-class ProvinciaResources(resources.ModelResource):
-    class Meta:
-        model = Provincia
-@admin.register(Provincia)
-class ProvinciaAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    resource_class = ProvinciaResources
-    list_display = (
-        'id',
-        'nombre_provincia',
-        'ubigeo',
-    )
-    search_fields = ('nombre_provincia',)
-
-#------------ Distrito--------------------------
-class DistritoResources(resources.ModelResource):
-    class Meta:
-        model = Distrito
-
-@admin.register(Distrito)
-class DistritoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    resource_class = DistritoResources
-    list_display = (
-        'id',
-        'nombre_distrito',
-        'ubigeo',
-        'provincia',
-    )
-    search_fields = ('nombre_distrito',)
-    
-    
 #--------------DIRECTORIO DE MUNICIPIO --------------------------
 class FiliacionResources(resources.ModelResource):
     class Meta:
@@ -269,3 +208,21 @@ class RptSeguimientoVisitaDisAdmin(ImportExportModelAdmin,admin.ModelAdmin):
                     'EESS_VISITA_4'
     )
     search_fields = ('id','Red','MicroRed','Nombre_Establecimiento','FECHA_VISITA_1','EESS_VISITA_1','FECHA_VISITA_2','EESS_VISITA_2','FECHA_VISITA_3','EESS_VISITA_3','FECHA_VISITA_4','EESS_VISITA_4',)  
+    
+    
+    
+###################################################### 
+#----  TIPO DE REPORTE -------------
+class TipoReporteResources(resources.ModelResource):
+    class Meta:
+        model = TipoReporte
+
+@admin.register(TipoReporte)
+class TipoReporteAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = TipoReporteResources
+    list_display = (                                                          
+                    'id',
+                    'nombre', 
+
+    )
+    search_fields = ('id','nombre',)  

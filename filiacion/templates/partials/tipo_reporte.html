@@ -1,0 +1,7 @@
+<div class="list-group" id="formulario-list">
+    {% for tr in tipo_reporte %}
+    <a href="#" class="list-group-item list-group-item-action" data-formulario-id="{{ tr.id }}">
+      {{ tr.nombre }}
+    </a>
+    {% endfor %}
+</div>

@@ -1,0 +1,154 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+{% block js %}
+{% endblock %}
+
+<main class="container">
+  <div class="display-1 text-center py-3">
+    <h2>REPORTE OPERACIONAL DE DISCAPACIDAD</h2>
+  </div>
+
+  <table border="1">
+    <tr>
+        <th>Red</th>
+        <th>Microred</th>
+        <th>Establecimiento</th>
+        <th>Mes</th>
+        <th>Columna1</th>
+        <th>Columna2</th>
+        <th>Columna3</th>
+        <th>Columna4</th>
+        <th>Columna5</th>
+    </tr>
+
+    {% for row in results %}
+        <tr>
+            <td>{{ row.0 }}</td>
+            <td>{{ row.1 }}</td>
+            <td>{{ row.2 }}</td>
+            <td>{{ row.3 }}</td>
+            <td>{{ row.4 }}</td>
+            <td>{{ row.5 }}</td>
+            <td>{{ row.6 }}</td>
+            <td>{{ row.7 }}</td>
+            <td>{{ row.8 }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<!-- BUSCADOR ESTADOS-->
+  <div class="row">
+    <div class="col-md-4">
+      <section class= "card card-body shadow mb-2">    
+        <div class = "form-group row">
+          
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#modalRed">Red</a>
+            <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#modalMicrored">Microred</a>
+            <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#modalEstablecimiento">Establecimiento</a>
+          </div>
+          
+          <div class="list-group">
+            <a href="#"
+               hx-get="{% url 'form_view' 'red' %}"
+               class="list-group-item list-group-item-action">Red</a>
+            <a href="#"
+               hx-get="{% url 'form_view' 'microred' %}"
+               class="list-group-item list-group-item-action">Microred</a>
+            <a href="#"
+               hx-get="{% url 'form_view' 'establecimiento' %}"
+               class="list-group-item list-group-item-action">Establecimiento</a>
+          </div>       
+        </div>
+    </div>
+
+    <div class="col-md-8">
+      <section class= "card card-body shadow mb-2">   
+        <div hx-target="#miDiv" hx-swap="outerHTML" hx-trigger="htmx:afterSwap">
+          <!-- Contenido dinámico se carga aquí -->
+        </div>
+
+        <!-- Modal FrmRed -->
+        <div class="modal fade" id="modalRed" tabindex="-1" aria-labelledby="modalRedLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalRedLabel">Formulario Red</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Agrega el formulario FrmRed aquí -->
+                <select name="select">
+                  <option value="value1">Diresa</option>
+                  <option value="value2" selected>Red</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Modal FrmMicrored -->
+        <div class="modal fade" id="modalMicrored" tabindex="-1" aria-labelledby="modalMicroredLabel" aria-hidden="true">        
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalMicroredLabel">Formulario Microred</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Agrega el formulario FrmMicrored aquí -->
+                <select name="select">
+                  <option value="value1">Diresa</option>
+                  <option value="value2" selected>Red</option>
+                  <option value="value3">Micro red</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Modal FrmEstablecimiento -->
+        <div class="modal fade" id="modalEstablecimiento" tabindex="-1" aria-labelledby="modalEstablecimientoLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalEstablecimientoLabel">Formulario Establecimiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Agrega el formulario FrmEstablecimiento aquí -->
+                {{ form_establecimiento }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+<!-- Estado RRHH  -->
+
+<!-- BUSCADOR -->
+<section class = "card card-body shadow mb-2">
+  <form method="GET" enctype="multipart/form-data" action="{% url 'reporte' %}">      
+    <div class = "form row">
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <label for="anio">Fecha de Inicio:</label>
+        <input class="form-control form-select-sm" type="date" id="fecha_inicio" name="fecha_inicio">
+      </div>  
+      <div class="col-sm-12 col-md-6 col-lg-3">
+        <label class="form-inline" for="mes">Fecha de Fin:</label>
+        <input class="form-control form-select-sm" type="date" id="fecha_fin" name="fecha_fin">
+      </div>  
+      <div class="col-sm-12 col-md-6 col-lg-2">
+        <br>
+        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-play-circle"></i> Procesar Información</button>
+      </div>
+    </div>
+  </form>
+</section>
+<!------------->  
+</main>
+{% endblock %}

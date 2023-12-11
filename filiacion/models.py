@@ -1,5 +1,13 @@
 from django.db import models
 
+class TipoReporte(models.Model):
+    nombre = models.CharField(max_length=50)
+    
+class Diresa(models.Model):
+    nombre_diresa = models.CharField(max_length=100, default="", null=True, blank=True)
+    cod_diresa = models.CharField(max_length=10, default="", null=True, blank=True)
+    def __str__(self):
+        return self.nombre_diresa   
 class Red(models.Model):
     nombre_red = models.CharField(max_length=100, default="", null=True, blank=True)
     cod_red = models.CharField(max_length=10, default="", null=True, blank=True)
@@ -9,16 +17,15 @@ class Microred(models.Model):
     nombre_microred = models.CharField(max_length=100,null=True, blank=True)
     cod_mic = models.CharField(max_length=10, default="",null=True, blank=True)
     cod_red = models.CharField(max_length=10, default="",null=True, blank=True)
-    red = models.ForeignKey(Red, on_delete=models.CASCADE, related_name='redes',null=True, blank=True)  
     def __str__(self):
         return self.nombre_microred   
 class Establecimiento(models.Model):
     nombre_establecimiento = models.CharField(max_length=100, null=True, blank=True)
     codigo_unico = models.CharField(max_length=100, default="", null=True, blank=True)
-    red = models.ForeignKey(Red, on_delete=models.CASCADE, null=True, blank=True)
-    microred = models.ForeignKey(Microred, on_delete=models.CASCADE, related_name='microredes', null=True, blank=True)  
+    cod_red = models.CharField(max_length=100, default="", null=True, blank=True)
+    cod_microred = models.CharField(max_length=100, default="", null=True, blank=True)
     def __str__(self):
-        return self.nombre_establecimiento     
+        return self.nombre_establecimiento 
 class Provincia(models.Model):
     nombre_provincia = models.CharField(max_length=100,null=True, blank=True)
     ubigeo = models.CharField(max_length=100, null=True, blank=True)
@@ -26,8 +33,7 @@ class Provincia(models.Model):
         return self.nombre_provincia        
 class Distrito(models.Model):
     nombre_distrito = models.CharField(max_length=100, null=True, blank=True)
-    ubigeo = models.CharField(max_length=100, null=True, blank=True)
-    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, related_name='provincias', null=True, blank=True)  
+    ubigeo = models.CharField(max_length=100, null=True, blank=True) 
     def __str__(self):
         return self.nombre_distrito
 # Create your models here.
@@ -121,7 +127,6 @@ class Directorio(models.Model):
     def __str__(self):
         return self.nombres
     
-
 class DirectorioRed(models.Model):
     TIPO_USUARIO = [
                     ('diresa', 'diresa'),
@@ -231,6 +236,8 @@ class ActualizaBD(models.Model):
     hora_padron = models.CharField(max_length=100,null=True, blank=True)
     fecha_certificado = models.CharField(max_length=100,null=True, blank=True)
     hora_certificado = models.CharField(max_length=100,null=True, blank=True)
+
+
 #################################################
 ###  CETIFICACIONES
 ################################################
@@ -299,3 +306,6 @@ class RptSeguimientoVisitaDis(models.Model):
     def __str__(self):
         return self.Id_Establecimiento
 
+####################################
+###  OPERACIONAL TIPO DE RESPORTE
+####################################

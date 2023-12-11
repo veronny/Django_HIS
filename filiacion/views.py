@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -8,9 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
-from .forms import FiliacionForm, DirectorioForm, DirectorioRedForm, DirectorioEstablecimientoForm
-from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento, Provincia, Distrito, Red, Microred, Establecimiento, rpt_certificado, ActualizaBD,RptVisitaDis,RptSeguimientoVisitaDis
-from django.db.models import Q
+from .forms import FiliacionForm, DirectorioForm, DirectorioRedForm, DirectorioEstablecimientoForm, ReporteForm, FrmDiresa, FrmRed, FrmMicrored, FrmEstablecimiento
+from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento, Diresa, Provincia, Distrito, Red, Microred, Establecimiento 
+from .models import rpt_certificado, ActualizaBD,RptVisitaDis,RptSeguimientoVisitaDis, TipoReporte
 
 # report excel
 from django.http.response import HttpResponse
@@ -18,6 +19,10 @@ from django.views.generic.base import TemplateView
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill,Side
 
+# report operacionales
+from django.db import models
+from django.db import connection
+from django.views import View
 
 def home(request):
     actualiza = ActualizaBD.objects.all()
@@ -1124,3 +1129,71 @@ class RptSeguimientoVistaDisExcel(TemplateView):
         response["Content-Disposition"] = contenido
         wb.save(response)
         return response
+
+#############################################
+# ----- RPT DISCAPACIDAD POSTGRES -----------
+#############################################
+class RptDiscapacidad2(View):
+    def get(self, request):
+        # Llamada a la función PostgreSQL
+        results = self.get_results_from_postgres(2023,1,2,1,6,631)  # Puedes ajustar los valores según tus necesidades
+      
+        # Renderizar el template y pasar los resultados
+        return render(request, 'rpt_discapacidad/rpt_operacional_dis.html', {'results': results})
+
+    def get_results_from_postgres(self, anio, mes_inicio, mes_fin, cod_red, cod_microred, cod_establec):
+        # Establecer una conexión a la base de datos    
+        with connection.cursor() as cursor:
+            # Ejecutar la función PostgreSQL
+            cursor.execute(f"SELECT * FROM rpt_discapacidad2({anio}, {mes_inicio}, {mes_fin}, {cod_red}, {cod_microred}, {cod_establec})")         
+            # Obtener los resultados
+            results = cursor.fetchall()
+
+        return results
+    
+    
+
+
+@login_required
+def TipoReporte(request):
+    tipo_reporte = TipoReporte.objects.all()
+    context = {
+                'tipo_reporte': tipo_reporte,
+                }
+    print(context)
+    return render(request, 'partials/tipo_reporte.html', context)
+
+class FrmRedView(View):
+    template_name = 'partials/frm_red.html'
+
+    def get(self, request, *args, **kwargs):
+        form_red = FrmRed()
+        return render(request, self.template_name, {'form_red': form_red})
+
+class FrmMicroredView(View):
+    template_name = 'partials/frm_microred.html'
+
+    def get(self, request, *args, **kwargs):
+        form = FrmMicrored()
+        return render(request, self.template_name, {'form': form})
+
+class FrmEstablecimientoView(View):
+    template_name = 'partials/frm_establecimiento.html'
+
+    def get(self, request, *args, **kwargs):
+        form = FrmEstablecimiento()
+        return render(request, self.template_name, {'form': form})
+   
+def form_view(request, form_type):
+    # Lógica para determinar el formulario según el tipo
+    if form_type == 'red':
+        # Lógica para el formulario de red
+        pass
+    elif form_type == 'microred':
+        # Lógica para el formulario de microred
+        pass
+    elif form_type == 'establecimiento':
+        # Lógica para el formulario de establecimiento
+        pass
+
+    return render(request, 'rpt_discapacidad/formulario2.html', {'form_type': form_type})

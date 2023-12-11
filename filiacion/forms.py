@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento
+from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento,TipoReporte, Diresa, Red, Microred, Establecimiento
 from django import forms
 
 class FiliacionForm(forms.ModelForm):
@@ -141,3 +141,36 @@ class DirectorioEstablecimientoForm(forms.ModelForm):
                 'req_formato' : forms.ClearableFileInput(attrs={'class': 'form-control'}),
                 'req_generales_excel' : forms.ClearableFileInput(attrs={'class': 'form-control'}),
        }
+       
+# forms.py reporte
+class ReporteForm(forms.Form):
+    tipo_reporte = forms.ModelChoiceField(queryset=TipoReporte.objects.all(), empty_label=None)
+    diresa = forms.ModelChoiceField(queryset=Diresa.objects.all(), required=False)
+    red = forms.ModelChoiceField(queryset=Red.objects.all(), required=False)
+    microred = forms.ModelChoiceField(queryset=Microred.objects.all(), required=False)
+    establecimiento = forms.ModelChoiceField(queryset=Establecimiento.objects.all(), required=False)
+    
+class FrmDiresa(forms.Form):
+    diresa = forms.ModelChoiceField(queryset=Diresa.objects.all(), required=False)
+class FrmRed(forms.ModelForm):
+    class Meta:
+        model = Red
+        fields = ['nombre_red']
+        widgets = {
+                'nombre_red' : forms.TextInput(attrs={'class':'form-control'}),
+        }
+class FrmMicrored(forms.ModelForm):
+    class Meta:
+        model = Microred
+        fields = ['nombre_microred', 'cod_red']
+        widgets = {
+                'nombre_microred' : forms.TextInput(attrs={'class':'form-control'}),
+        }
+
+class FrmEstablecimiento(forms.ModelForm):
+    class Meta:
+        model = Establecimiento
+        fields = ['nombre_establecimiento', 'cod_red', 'cod_microred']
+        widgets = {
+                'nombre_establecimiento' : forms.TextInput(attrs={'class':'form-control'}),
+        }
