@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http.response import JsonResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
-from .forms import FiliacionForm, DirectorioForm, DirectorioRedForm, DirectorioEstablecimientoForm, ReporteForm, FrmDiresa, FrmRed, FrmMicrored, FrmEstablecimiento
 from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento, Diresa, Provincia, Distrito, Red, Microred, Establecimiento 
 from .models import rpt_certificado, ActualizaBD,RptVisitaDis,RptSeguimientoVisitaDis, TipoReporte
 
@@ -23,6 +22,10 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill,Side
 from django.db import models
 from django.db import connection
 from django.views import View
+
+# padron nominal
+from .models import Item
+
 
 def home(request):
     actualiza = ActualizaBD.objects.all()
@@ -40,103 +43,6 @@ def filiacion(request):
                 }
     return render(request, 'filiacion.html', context)
 
-@login_required
-def create_filiacion(request):
-    if request.method == "GET":
-        return render(request, 'create_filiacion.html', {
-            "form": FiliacionForm
-        })
-    else:
-        try:
-            form = FiliacionForm(request.POST, request.FILES)
-            new_filiacion = form.save(commit=False)
-            new_filiacion.save()
-            return redirect('filiacion')
-        except ValueError:
-            return render(request, 'create_filiacion.html', {
-                "form": FiliacionForm,
-                "error": "Error creating task."
-            })
-
-@login_required
-def filiacion_detail(request, filiacion_id):
-    if request.method == 'GET':
-        filiacion = get_object_or_404(Filiacion, pk=filiacion_id)
-        form = FiliacionForm(instance=filiacion)
-        context = {
-            'filiacion': filiacion,
-            'form': form
-        }
-        return render(request, 'filiacion_detail.html', context)
-    else:
-        try:
-            filiacion = get_object_or_404(Filiacion, pk=filiacion_id)
-            form = FiliacionForm(request.POST,request.FILES, instance=filiacion)
-            form.save()
-            return redirect('filiacion')
-        except ValueError:
-            return render(request, 'filiacion_detail.html', {'filiacion': filiacion, 'form': form, 'error': 'Error actualizar'})
-
-@login_required
-def delete_filiacion(request, filiacion_id):
-    filiacion = get_object_or_404(Filiacion, pk=filiacion_id)
-    if request.method == 'POST':
-        filiacion.delete()
-        return redirect('filiacion')
-
-# ----- DIRECTORIO SALUD DIRESA --------------------
-@login_required
-def directorio_diresa(request):
-    directorio_diresas = Directorio.objects.all()
-    context = {
-                'directorio_diresas': directorio_diresas,
-                }
-    return render(request, 'directorio_diresa.html', context)
-
-@login_required
-def create_directorio_diresa(request):
-    if request.method == "GET":
-        return render(request, 'create_directorio_diresa.html', {
-            "form": DirectorioForm
-        })
-    else:
-        try:
-            form = DirectorioForm(request.POST, request.FILES)
-            new_directorio = form.save(commit=False)
-            new_directorio.save()
-            return redirect('directorio_salud')
-        except ValueError:
-            return render(request, 'create_directorio_diresa.html', {
-                "form": DirectorioForm,
-                "error": "Error creating task."
-            })
-
-@login_required
-def directorio_diresa_detail(request, directorio_diresa_id):
-    if request.method == 'GET':
-        directorio_diresa = get_object_or_404(Directorio, pk=directorio_diresa_id)
-        form = DirectorioForm(instance=directorio_diresa)
-        context = {
-            'directorio_diresa': directorio_diresa,
-            'form': form
-        }
-        return render(request, 'directorio_diresa_detail.html', context)
-    else:
-        try:
-            directorio_diresa = get_object_or_404(Directorio, pk=directorio_diresa_id)
-            form = DirectorioForm(request.POST,request.FILES, instance=directorio_diresa)
-            form.save()
-            return redirect('directorio_salud')
-        except ValueError:
-            return render(request, 'directorio_diresa_detail.html', {'directorio_diresa': directorio_diresa, 'form': form, 'error': 'Error actualizar'})
-
-@login_required
-def delete_directorio_diresa(request, directorio_diresa_id):
-    directorio = get_object_or_404(Directorio, pk=directorio_diresa_id)
-    if request.method == 'POST':
-        directorio.delete()
-        return redirect('directorio_salud')
-
 # ----- DIRECTORIO SALUD RED --------------------
 @login_required
 def directorio_red(request):
@@ -146,50 +52,6 @@ def directorio_red(request):
                 }
     return render(request, 'directorio_red.html', context)
 
-@login_required
-def create_directorio_red(request):
-    if request.method == "GET":
-        return render(request, 'create_directorio_red.html', {
-            "form": DirectorioRedForm
-        })
-    else:
-        try:
-            form = DirectorioRedForm(request.POST, request.FILES)
-            new_directorio_red = form.save(commit=False)
-            new_directorio_red.save()
-            return redirect('directorio_red')
-        except ValueError:
-            return render(request, 'create_directorio_red.html', {
-                "form": DirectorioRedForm,
-                "error": "Error creating task."
-            })
-
-@login_required
-def directorio_red_detail(request, directorio_red_id):
-    if request.method == 'GET':
-        directorio_red = get_object_or_404(DirectorioRed, pk=directorio_red_id)
-        form = DirectorioRedForm(instance=directorio_red)
-        context = {
-            'directorio_red': directorio_red,
-            'form': form
-        }
-        return render(request, 'directorio_red_detail.html', context)
-    else:
-        try:
-            directorio_red = get_object_or_404(DirectorioRed, pk=directorio_red_id)
-            form = DirectorioRedForm(request.POST,request.FILES, instance=directorio_red)
-            form.save()
-            return redirect('directorio_red')
-        except ValueError:
-            return render(request, 'directorio_red_detail.html', {'directorio_red': directorio_red, 'form': form, 'error': 'Error actualizar'})
-
-@login_required
-def delete_directorio_red(request, directorio_red_id):
-    directorio_red = get_object_or_404(DirectorioRed, pk=directorio_red_id)
-    if request.method == 'POST':
-        directorio_red.delete()
-        return redirect('directorio_red')
-
 # ----- DIRECTORIO SALUD ESTABLECIMIENTO --------------------
 @login_required
 def directorio_establecimiento(request):
@@ -198,50 +60,6 @@ def directorio_establecimiento(request):
                 'directorio_establecimientos': directorio_establecimientos,
                 }
     return render(request, 'directorio_establecimiento.html', context)
-
-@login_required
-def create_directorio_establecimiento(request):
-    if request.method == "GET":
-        return render(request, 'create_directorio_establecimiento.html', {
-            "form": DirectorioEstablecimientoForm
-        })
-    else:
-        try:
-            form = DirectorioEstablecimientoForm(request.POST, request.FILES)
-            new_directorio_establecimiento = form.save(commit=False)
-            new_directorio_establecimiento.save()
-            return redirect('directorio_establecimiento')
-        except ValueError:
-            return render(request, 'create_directorio_establecimiento.html', {
-                "form": DirectorioEstablecimientoForm,
-                "error": "Error creating task."
-            })
-
-@login_required
-def directorio_establecimiento_detail(request, directorio_establecimiento_id):
-    if request.method == 'GET':
-        directorio_establecimiento = get_object_or_404(DirectorioEstablecimiento, pk=directorio_establecimiento_id)
-        form = DirectorioEstablecimientoForm(instance=directorio_establecimiento)
-        context = {
-            'directorio_establecimiento': directorio_establecimiento,
-            'form': form
-        }
-        return render(request, 'directorio_establecimiento_detail.html', context)
-    else:
-        try:
-            directorio_establecimiento = get_object_or_404(DirectorioEstablecimiento, pk=directorio_establecimiento_id)
-            form = DirectorioEstablecimientoForm(request.POST,request.FILES, instance=directorio_establecimiento)
-            form.save()
-            return redirect('directorio_establecimiento')
-        except ValueError:
-            return render(request, 'directorio_establecimiento_detail.html', {'directorio_establecimiento': directorio_establecimiento, 'form': form, 'error': 'Error actualizar'})
-
-@login_required
-def delete_directorio_establecimiento(request, directorio_establecimiento_id):
-    directorio_establecimiento = get_object_or_404(DirectorioEstablecimiento, pk=directorio_establecimiento_id)
-    if request.method == 'POST':
-        directorio_establecimiento.delete()
-        return redirect('directorio_establecimiento')
 
 # ----- INICIO DE SESION --------------------------------
 @login_required
@@ -1150,50 +968,82 @@ class RptDiscapacidad2(View):
             results = cursor.fetchall()
 
         return results
-    
-    
 
 
-@login_required
-def TipoReporte(request):
-    tipo_reporte = TipoReporte.objects.all()
+#############################################
+# SITUACION PADRON NOMINAL 
+#############################################
+
+def index(request):
+    provincias = Provincia.objects.all()
+    return render(request, 'padron/situacion/index.html', {'provincias': provincias})
+
+#--- PROVINCIAS -------------------------------------------------------------
+def get_provincias(request,provincias_id):
+    provincias = Provincia.objects.all()
     context = {
-                'tipo_reporte': tipo_reporte,
-                }
-    print(context)
-    return render(request, 'partials/tipo_reporte.html', context)
+                'provincias': provincias
+              }
+    return render(request, 'padron/situacion/provincias.html', context)
+#--- DISTRITOS -------------------------------------------------------------
+def get_distritos(request, distritos_id):
+    provincias = Provincia.objects.all()
+    context = {
+                'provincias': provincias
+              }
+    return render(request, 'padron/situacion/distritos.html',context)
 
-class FrmRedView(View):
-    template_name = 'partials/frm_red.html'
+def p_distritos(request):
+    provincias = request.GET.get('provincia')
+    distritos = Distrito.objects.filter(cod_provincia=provincias)
+    context= {
+            'distritos': distritos
+             }
+    return render(request, 'padron/situacion/partials/p_distritos.html',context)
 
-    def get(self, request, *args, **kwargs):
-        form_red = FrmRed()
-        return render(request, self.template_name, {'form_red': form_red})
+#--- REDES ------------------------------------------------------------------
+def get_redes(request,redes_id):
+    redes = Red.objects.all()
+    context = {
+                'redes': redes
+              }
+    return render(request, 'padron/situacion/redes.html',context)
+#--- MICROREDES -------------------------------------------------------------
+def get_microredes(request, microredes_id):
+    redes = Red.objects.all()
+    context= {
+                'redes': redes
+             }
+    return render(request, 'padron/situacion/microredes.html', context)
 
-class FrmMicroredView(View):
-    template_name = 'partials/frm_microred.html'
+def p_microredes(request):
+    redes = request.GET.get('redes')
+    microredes = Microred.objects.filter(cod_red=redes)
+    context= {
+            'microredes': microredes,
+            'is_htmx': True
+             }
+    return render(request, 'padron/situacion/partials/p_microredes.html', context)
 
-    def get(self, request, *args, **kwargs):
-        form = FrmMicrored()
-        return render(request, self.template_name, {'form': form})
+#--- ESTABLECIMIENTOS -------------------------------------------------------
+def get_establecimientos(request,establecimiento_id):
+    redes = Red.objects.all()
+    context = {
+                'redes': redes
+              }
+    return render(request, 'padron/situacion/establecimientos.html',context)
 
-class FrmEstablecimientoView(View):
-    template_name = 'partials/frm_establecimiento.html'
+def p_establecimientos(request):
+    microredes = request.GET.get('microredes')
+    establecimientos = Establecimiento.objects.filter(red_microred=microredes)
+    context= {
+            'establecimientos': establecimientos
+             }
+    return render(request, 'padron/situacion/partials/p_establecimientos.html', context)
 
-    def get(self, request, *args, **kwargs):
-        form = FrmEstablecimiento()
-        return render(request, self.template_name, {'form': form})
-   
-def form_view(request, form_type):
-    # Lógica para determinar el formulario según el tipo
-    if form_type == 'red':
-        # Lógica para el formulario de red
-        pass
-    elif form_type == 'microred':
-        # Lógica para el formulario de microred
-        pass
-    elif form_type == 'establecimiento':
-        # Lógica para el formulario de establecimiento
-        pass
-
-    return render(request, 'rpt_discapacidad/formulario2.html', {'form_type': form_type})
+#---  PADRON NOMINAL GRAFICOS------------------------------------------------
+def get_chart(request):
+    
+    chart={}
+    
+    return JsonResponse(chart)

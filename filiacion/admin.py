@@ -5,13 +5,6 @@ from django.contrib import admin
 from django.contrib.auth.models import Permission
 from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD, RptVisitaDis, RptSeguimientoVisitaDis, TipoReporte
 
-# Register your models here.
-
-#------------Red---------------------------------
-class RedResources(resources.ModelResource):
-    class Meta:
-        model = Red
-
 #--------------DIRECTORIO DE MUNICIPIO --------------------------
 class FiliacionResources(resources.ModelResource):
     class Meta:
@@ -209,8 +202,6 @@ class RptSeguimientoVisitaDisAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     )
     search_fields = ('id','Red','MicroRed','Nombre_Establecimiento','FECHA_VISITA_1','EESS_VISITA_1','FECHA_VISITA_2','EESS_VISITA_2','FECHA_VISITA_3','EESS_VISITA_3','FECHA_VISITA_4','EESS_VISITA_4',)  
     
-    
-    
 ###################################################### 
 #----  TIPO DE REPORTE -------------
 class TipoReporteResources(resources.ModelResource):
@@ -226,3 +217,92 @@ class TipoReporteAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 
     )
     search_fields = ('id','nombre',)  
+    
+###################################################### 
+#----  PROVINCIA -------------
+class ProvinciaResources(resources.ModelResource):
+    class Meta:
+        model = Provincia
+
+@admin.register(Provincia)
+class ProvinciaAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = ProvinciaResources
+    list_display = (                                                          
+                    'id',
+                    'nombre_provincia', 
+                    'ubigeo', 
+    )
+    search_fields = ('id','nombre_provincia','ubigeo',)  
+
+###################################################### 
+#----  DISTRITO -------------
+class DistritoResources(resources.ModelResource):
+    class Meta:
+        model = Distrito
+
+@admin.register(Distrito)
+class DistritoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = DistritoResources
+    list_display = (                                                          
+                    'id',
+                    'nombre_distrito', 
+                    'ubigeo_dis', 
+                    'cod_provincia'
+    )
+    search_fields = ('id','nombre_distrito','ubigeo_dis','cod_provincia',)  
+
+###################################################### 
+#----  RED  -------------
+class RedResources(resources.ModelResource):
+    class Meta:
+        model = Red
+
+@admin.register(Red)
+class RedAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = RedResources
+    list_display = (                                                          
+                    'id',
+                    'nombre_red', 
+                    'cod_red', 
+    )
+    search_fields = ('id','nombre_red','cod_red',)  
+
+###################################################### 
+#----  MICRORED  -------------
+class MicroredResources(resources.ModelResource):
+    class Meta:
+        model = Microred
+
+@admin.register(Microred)
+class MicroredAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = MicroredResources
+    list_display = (                                                          
+                    'id',
+                    'nombre_microred',
+                    'cod_microred', 
+                    'cod_red', 
+                    'red_microred',
+    )
+    search_fields = ('id','nombre_microred','cod_microred','cod_red','red_microred',)  
+ 
+
+###################################################### 
+#----  ESTABLECIMIENTOS -------------
+class EstablecimientoResources(resources.ModelResource):
+    class Meta:
+        model = Establecimiento
+
+@admin.register(Establecimiento)
+class EstablecimientoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = EstablecimientoResources
+    list_display = (                                                          
+                    'id',
+                    'nombre_establecimiento', 
+                    'codigo_unico', 
+                    'cod_red', 
+                    'cod_microred', 
+                    'red_microred',
+    )
+    search_fields = ('id','nombre_establecimiento','codigo_unico','cod_red','cod_microred','red_microred',)  
+    
+    

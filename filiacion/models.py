@@ -1,8 +1,7 @@
 from django.db import models
 
 class TipoReporte(models.Model):
-    nombre = models.CharField(max_length=50)
-    
+    nombre = models.CharField(max_length=50)  
 class Diresa(models.Model):
     nombre_diresa = models.CharField(max_length=100, default="", null=True, blank=True)
     cod_diresa = models.CharField(max_length=10, default="", null=True, blank=True)
@@ -14,16 +13,18 @@ class Red(models.Model):
     def __str__(self):
         return self.nombre_red   
 class Microred(models.Model):
-    nombre_microred = models.CharField(max_length=100,null=True, blank=True)
-    cod_mic = models.CharField(max_length=10, default="",null=True, blank=True)
-    cod_red = models.CharField(max_length=10, default="",null=True, blank=True)
+    nombre_microred = models.CharField(max_length=200,null=True, blank=True)
+    cod_microred = models.CharField(max_length=100, default="",null=True, blank=True)
+    cod_red = models.CharField(max_length=100, default="",null=True, blank=True)
+    red_microred = models.CharField(max_length=100, default="",null=True, blank=True)
     def __str__(self):
-        return self.nombre_microred   
+        return self.nombre_microred  
 class Establecimiento(models.Model):
     nombre_establecimiento = models.CharField(max_length=100, null=True, blank=True)
     codigo_unico = models.CharField(max_length=100, default="", null=True, blank=True)
     cod_red = models.CharField(max_length=100, default="", null=True, blank=True)
     cod_microred = models.CharField(max_length=100, default="", null=True, blank=True)
+    red_microred = models.CharField(max_length=100, default="",null=True, blank=True)
     def __str__(self):
         return self.nombre_establecimiento 
 class Provincia(models.Model):
@@ -33,10 +34,10 @@ class Provincia(models.Model):
         return self.nombre_provincia        
 class Distrito(models.Model):
     nombre_distrito = models.CharField(max_length=100, null=True, blank=True)
-    ubigeo = models.CharField(max_length=100, null=True, blank=True) 
+    ubigeo_dis = models.CharField(max_length=100, null=True, blank=True) 
+    cod_provincia = models.CharField(max_length=100, null=True, blank=True) 
     def __str__(self):
         return self.nombre_distrito
-# Create your models here.
 class Filiacion(models.Model):
     TIPO_MUNICIPALIDAD = [
                 ('Provincial', 'Provincial'),
@@ -79,7 +80,6 @@ class Filiacion(models.Model):
     
     def __str__(self):
         return self.nombres
-    
 class Directorio(models.Model):
     TIPO_USUARIO = [
                     ('diresa', 'diresa'),
@@ -237,11 +237,9 @@ class ActualizaBD(models.Model):
     fecha_certificado = models.CharField(max_length=100,null=True, blank=True)
     hora_certificado = models.CharField(max_length=100,null=True, blank=True)
 
-
 #################################################
 ###  CETIFICACIONES
-################################################
-
+#################################################
 class rpt_certificado(models.Model):
     Anio = models.CharField(max_length=200,null=True, blank=True)
     Mes = models.CharField(max_length=200,null=True, blank=True)
@@ -284,7 +282,6 @@ class RptVisitaDis(models.Model):
     def __str__(self):
         return self.Id_Establecimiento
 
-
 class RptSeguimientoVisitaDis(models.Model):
     Codigo_Red = models.CharField(max_length=200,null=True, blank=True)
     Red = models.CharField(max_length=200,null=True, blank=True)
@@ -306,6 +303,11 @@ class RptSeguimientoVisitaDis(models.Model):
     def __str__(self):
         return self.Id_Establecimiento
 
-####################################
-###  OPERACIONAL TIPO DE RESPORTE
-####################################
+################################################# 
+###  PADRON NOMINAL 
+#################################################
+class Item(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name

@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'gestante.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'report_dis',
+        'NAME': 'report_his',
         'USER': 'postgres',
         'PASSWORD': 'Veronny2@2@',
         'HOST': 'localhost',

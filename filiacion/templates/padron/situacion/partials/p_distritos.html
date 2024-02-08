@@ -1,0 +1,6 @@
+<label class="text-primary" for="p_distrito" name="p_distrito">Distrito</label>
+    <select class="form-control custom-select">
+        {% for d in distritos %}
+        <option value="{{ d.id }}">{{ d.nombre_distrito }}</option>
+        {% endfor %}
+    </select>

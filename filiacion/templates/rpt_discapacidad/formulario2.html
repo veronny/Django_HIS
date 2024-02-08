@@ -1,7 +1,9 @@
-<!-- formulario.html -->
-{% block content %}
-  <div class="container mt-3">
-    <h2>{{ form_type|capfirst }} Formulario</h2>
-    <!-- Agrega aquí el formulario correspondiente al tipo -->
-  </div>
-{% endblock %}
+{% if form %}
+    <form hx-post="{% url 'form_submit' %}" hx-trigger="submit">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+{% else %}
+    <p>Error al cargar el formulario.</p>
+{% endif %}

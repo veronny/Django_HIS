@@ -1,0 +1,6 @@
+<label class="text-primary" for="p_establecimiento" name="p_establecimiento">Establecimiento : </label>
+    <select class="form-control custom-select">
+        {% for e in establecimientos %}
+        <option value="{{ e.id }}">{{ e.nombre_establecimiento }}</option>
+        {% endfor %}
+    </select>
