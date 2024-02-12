@@ -12,8 +12,12 @@
     <!-- Iconos  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <!-- Sub Menu  -->
-    <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/navegation.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- tabla TAPS Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
   </head>
   <body style="display: grid; min-height: 100vh; grid-template-rows: auto 1fr auto;">
     {% include '_navbar.html' %}
@@ -25,12 +29,19 @@
     <script src="{% static 'js/jquery-3.5.1.js' %}"></script>
     <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.js"></script>
+    <!-- Apache ECharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
     
-    <!--
-    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
-    -->
+    <!-- Tabla TAP Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
     <!-- Tabla Municipalidad -->
     <script type="text/javascript">
       $('#table_padron_municipal').DataTable({

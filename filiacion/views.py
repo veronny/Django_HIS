@@ -17,15 +17,13 @@ from django.http.response import HttpResponse
 from django.views.generic.base import TemplateView
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill,Side
-
 # report operacionales
 from django.db import models
 from django.db import connection
 from django.views import View
 
-# padron nominal
-from .models import Item
-
+# graficos
+from random import randrange
 
 def home(request):
     actualiza = ActualizaBD.objects.all()
@@ -1042,8 +1040,71 @@ def p_establecimientos(request):
     return render(request, 'padron/situacion/partials/p_establecimientos.html', context)
 
 #---  PADRON NOMINAL GRAFICOS------------------------------------------------
-def get_chart(request):
+def get_chart(_request):
+    # Consulta para obtener los datos de ventas
+
+    # Formatear los datos para pasarlos a la plantilla
+
+    colors = ['#5470C6', '#91CC75', '#EE6666'];   
     
-    chart={}
+    serie=[]
+    counter = 0
+    
+    while(counter<12):
+        serie.append(randrange(100,400))
+        counter += 1
+
+    serie2=[]
+    counter2 = 0
+    while(counter2<12):
+        serie2.append(randrange(100,400))
+        counter2 += 1
+        
+    serie3=[]
+    counter3 = 0
+    while(counter3<12):
+        serie3.append(randrange(0,100))
+        counter3 += 1
+   
+    chart = {
+        'tooltip':{
+            'show': True,
+            'trigger': "axis",
+            'triggerOn': "mousemove|click"    
+        },
+        'xAxis':[
+            {
+                'type':"category",
+                'data':["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SET","NOV","DIC"]
+            }            
+        ],
+        'yAxis':[
+            {
+                'type':"value",
+                'axisLine': {
+                        'lineStyle': {
+                            'color': colors[0]
+                        }
+                },
+            }            
+        ],
+        'series':[
+            {
+                'data': serie,
+                'type': "bar",
+            }, 
+            {
+                'data': serie2,
+                'type': "bar",
+            },
+            {
+                'data': serie3,
+                'type': "line",
+            },             
+        ],
+        
+        
+    }
     
     return JsonResponse(chart)
+

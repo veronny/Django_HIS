@@ -3,10 +3,113 @@
 {% load static %}
 
 <main class="container">
-  <div class="display-1 text-center py-3">
-    <h3><span style="color:#D37506;">SITUACION DEL PADRON NOMINAL</span></h3>
+  <br>
+  <!-- CABECERAS -->
+  <div class="display-1 text-center py-3 alert alert-primary" role="alert">
+    <h4>NIÑ@S MENORES 12 MESES QUE RECIBEN 04 CONSEJERIAS A TRAVES DE VISITA DOMICILIARIA</h4>
   </div>
+  <!-- FIN DE CABECERA -->
+  
+  <!-- GRAFICO -->
+  <div class="row">
+    <div class="col-md-12">
+      <section class="card card-body shadow mb-2">
+        <div id="chart" class="chart"></div>
 
+        </div>
+      </section>
+  </div>
+  <!-- FIN DE GRAFICO -->
+  <!-- CABECERAS -->
+  <div class="display-1 text-center py-3 alert alert-primary" role="alert">
+    <h4>AVANCE DETALLADO DEL INDICADOR</h4>
+  </div>
+  <!-- FIN DE CABECERA -->
+  <!-- TABLA DETALLADO -->
+    <div class="row">
+      <div class="col-md-12">
+        <section class="card card-body shadow mb-2">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" style="font-size: 14px;" id="region-tab" data-toggle="tab" href="#region" role="tab" aria-controls="region" aria-selected="true">CHANCHAMAYO</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="font-size: 14px;" id="provincia-tab" data-toggle="tab" href="#provincia" role="tab" aria-controls="provincia" aria-selected="false">JAUJA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">JUNIN</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">PICHANAKI</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">CHUPACA</a>
+               </li>
+               <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">PANGOA</a>
+               </li>
+               <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">SATIPO</a>
+               </li>
+               <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">TARMA</a>
+               </li>
+               <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">VALLE DEL MANTARO</a>
+               </li>               
+
+          </ul>
+          <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="region" role="tabpanel" aria-labelledby="region-tab">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cod</th>
+                                <th>Establecimiento</th>
+                                <th>Den</th>
+                                <th>Num</th>
+                                <th>Por (%)</th>
+                                <th>RN (28 d)</th>
+                                <th>2M-5M</th>
+                                <th>6M-8M</th>
+                                <th>9M-12M</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for indicador in indicadores %}
+                                <tr>
+                                    <td>{{ indicador.numerador }}</td>
+                                    <td>{{ indicador.denominador }}</td>
+                                    <td>{{ indicador.porcentaje }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="provincia" role="tabpanel" aria-labelledby="provincia-tab">
+                    <!-- Tabla para provincia -->
+                    provincia
+                    <!-- Tabla para provincia -->
+                </div>
+                <div class="tab-pane fade" id="distrito" role="tabpanel" aria-labelledby="distrito-tab">
+                    <!-- Tabla para distrito -->
+
+                </div>
+                <div class="tab-pane fade" id="distrito" role="tabpanel" aria-labelledby="distrito-tab">
+                  <!-- Tabla para distrito -->
+                </div>
+                
+          </div>
+        </section>
+      </div>  
+    </div>
+   <!-- FIN DE TABLA -->
+    <!-- CABECERAS -->
+    <div class="display-1 text-center py-3 alert alert-primary" role="alert">
+      <h4>SEGUIMIENTO NOMINAL</h4>
+    </div>
+    <!-- FIN DE CABECERA -->
+  <!-- SEGUIMIENTO -->
   <div class="row">
     <div class="col-md-3">
       <section class="card card-body shadow mb-2">
@@ -19,7 +122,6 @@
               <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_microredes' 1 %}" hx-swap="innerHTML" hx-trigger="click">Microred</a>
               <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_establecimientos' 1 %}" hx-swap="innerHTML" hx-trigger="click">Establecimiento de Salud</a>
               <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">DNI</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">Fecha de Nacimiento</a>
           </ul>
         </div>
       </section>

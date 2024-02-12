@@ -1,6 +1,7 @@
 # miapp/urls.py
 from django.urls import path
-from .views import index, get_distritos, p_distritos, get_redes, get_provincias, get_microredes, p_microredes, get_establecimientos, p_establecimientos
+from .views import index, get_distritos, p_distritos, get_redes, get_provincias, get_microredes, p_microredes 
+from .views import get_establecimientos,p_establecimientos, get_chart
 
 app_name = 'filiacion'
 
@@ -21,4 +22,7 @@ urlpatterns = [
     # establecimientos
     path('get_establecimientos/<int:establecimiento_id>/', get_establecimientos, name='get_establecimientos'),
     path('p_establecimiento/', p_establecimientos, name='p_establecimientos'),
+    # graficos
+    path('get_chart/', get_chart, name='get_chart'),
+    
 ]
