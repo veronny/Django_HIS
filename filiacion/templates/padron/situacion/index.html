@@ -29,86 +29,439 @@
     <div class="row">
       <div class="col-md-12">
         <section class="card card-body shadow mb-2">
+          <!-- link de tap -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" style="font-size: 14px;" id="region-tab" data-toggle="tab" href="#region" role="tab" aria-controls="region" aria-selected="true">CHANCHAMAYO</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="font-size: 14px;" id="provincia-tab" data-toggle="tab" href="#provincia" role="tab" aria-controls="provincia" aria-selected="false">JAUJA</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">JUNIN</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">PICHANAKI</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">CHUPACA</a>
-               </li>
-               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">PANGOA</a>
-               </li>
-               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">SATIPO</a>
-               </li>
-               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">TARMA</a>
-               </li>
-               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="distrito-tab" data-toggle="tab" href="#distrito" role="tab" aria-controls="distrito" aria-selected="false">VALLE DEL MANTARO</a>
-               </li>               
-
+              <li class="nav-item">
+                  <a class="nav-link active" style="font-size: 14px;" id="chyo-tab" data-toggle="tab" href="#chyo" role="tab" aria-controls="chyo" aria-selected="true">CHANCHAMAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 14px;" id="jauja-tab" data-toggle="tab" href="#jauja" role="tab" aria-controls="jauja" aria-selected="false">JAUJA</a>
+              </li>
+              <li class="nav-item">
+                    <a class="nav-link" style="font-size: 14px;" id="junin-tab" data-toggle="tab" href="#junin" role="tab" aria-controls="junin" aria-selected="false">JUNIN</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 14px;" id="pki-tab" data-toggle="tab" href="#pki" role="tab" aria-controls="pki" aria-selected="false">PICHANAKI</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 14px;" id="chupaca-tab" data-toggle="tab" href="#chupaca" role="tab" aria-controls="chupaca" aria-selected="false">CHUPACA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="pangoa-tab" data-toggle="tab" href="#pangoa" role="tab" aria-controls="pangoa" aria-selected="false">PANGOA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="satipo-tab" data-toggle="tab" href="#satipo" role="tab" aria-controls="satipo" aria-selected="false">SATIPO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="tarma-tab" data-toggle="tab" href="#tarma" role="tab" aria-controls="tarma" aria-selected="false">TARMA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 14px;" id="valle-tab" data-toggle="tab" href="#valle" role="tab" aria-controls="valle" aria-selected="false">VALLE DEL MANTARO</a>
+              </li>               
           </ul>
+          <!-- fin link de tap -->
           <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="region" role="tabpanel" aria-labelledby="region-tab">
-                    <table class="table">
-                        <thead>
+            <!-- contenido de tap -->
+                <div class="tab-pane fade show active" id="chyo" role="tabpanel" aria-labelledby="chyo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">COD</th>
+                            <th style="text-align:center;font-size: 13px;">ESTABLECIMIENTO</th>
+                            <th style="text-align:center;font-size: 13px;">DEN</th>
+                            <th style="text-align:center;font-size: 13px;">NUM</th>
+                            <th style="text-align:center;font-size: 13px;">POR (%)</th>
+                            <th style="text-align:center;font-size: 13px;">RN</th>
+                            <th style="text-align:center;font-size: 13px;">2M-5M</th>
+                            <th style="text-align:center;font-size: 13px;">6M-8M</th>
+                            <th style="text-align:center;font-size: 13px;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_chyo %}
                             <tr>
-                                <th>Cod</th>
-                                <th>Establecimiento</th>
-                                <th>Den</th>
-                                <th>Num</th>
-                                <th>Por (%)</th>
-                                <th>RN (28 d)</th>
-                                <th>2M-5M</th>
-                                <th>6M-8M</th>
-                                <th>9M-12M</th>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                             
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {% for indicador in indicadores %}
-                                <tr>
-                                    <td>{{ indicador.numerador }}</td>
-                                    <td>{{ indicador.denominador }}</td>
-                                    <td>{{ indicador.porcentaje }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHANCHAMAYO -->
                 </div>
-                <div class="tab-pane fade" id="provincia" role="tabpanel" aria-labelledby="provincia-tab">
-                    <!-- Tabla para provincia -->
-                    provincia
-                    <!-- Tabla para provincia -->
+                <div class="tab-pane fade" id="jauja" role="tabpanel" aria-labelledby="jauja-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_jauja" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_jauja %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para JAUJA -->
                 </div>
-                <div class="tab-pane fade" id="distrito" role="tabpanel" aria-labelledby="distrito-tab">
-                    <!-- Tabla para distrito -->
-
+                <div class="tab-pane fade" id="junin" role="tabpanel" aria-labelledby="junin-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_junin" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_junin %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para JUNIN -->
                 </div>
-                <div class="tab-pane fade" id="distrito" role="tabpanel" aria-labelledby="distrito-tab">
-                  <!-- Tabla para distrito -->
+                <div class="tab-pane fade" id="pki" role="tabpanel" aria-labelledby="pki-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_pki" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_pki %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para PICHANAKI -->
                 </div>
-                
+                <div class="tab-pane fade" id="chupaca" role="tabpanel" aria-labelledby="chupaca-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_red_chupaca" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN </th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_chupaca %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHUPACA -->
+                </div>
+                <div class="tab-pane fade" id="pangoa" role="tabpanel" aria-labelledby="pangoa-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_pangoa" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_pangoa %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para PANGOA -->
+                </div>
+                <div class="tab-pane fade" id="satipo" role="tabpanel" aria-labelledby="satipo-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_red_satipo" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_satipo %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para SATIPO -->
+                </div>
+                <div class="tab-pane fade" id="tarma" role="tabpanel" aria-labelledby="tarma-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_red_tarma" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_tarma %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para TARMA -->
+                </div>
+                <div class="tab-pane fade" id="valle" role="tabpanel" aria-labelledby="valle-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_valle" style="font-size: 13px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;">Cod</th>
+                            <th style="text-align:center;">Establecimiento</th>
+                            <th style="text-align:center;">Den</th>
+                            <th style="text-align:center;">Num</th>
+                            <th style="text-align:center;">Por (%)</th>
+                            <th style="text-align:center;">RN</th>
+                            <th style="text-align:center;">2M-5M</th>
+                            <th style="text-align:center;">6M-8M</th>
+                            <th style="text-align:center;">9M-12M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_valle %}
+                            <tr>
+                                <td>{{ i.Codigo_Unico }}</td>
+                                <td>{{ i.Nombre_Establecimiento }}</td>
+                                <td style="text-align:right;">{{ i.suma_den }}</td>
+                                <td style="text-align:right;">{{ i.suma_num }}</td>
+                          
+                                <td style="text-align:right;">
+                                  {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                    <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                    <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% else %}
+                                    <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                  {% endif %}
+                                </td>
+                                
+                                <td style="text-align:center;">{{ i.suma_v1 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v2 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v3 }}</td>
+                                <td style="text-align:center;">{{ i.suma_v4 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para VALLE -->
+                </div>
+            <!-- fin contenido de tap -->   
           </div>
         </section>
       </div>  
     </div>
-   <!-- FIN DE TABLA -->
-    <!-- CABECERAS -->
-    <div class="display-1 text-center py-3 alert alert-primary" role="alert">
-      <h4>SEGUIMIENTO NOMINAL</h4>
-    </div>
-    <!-- FIN DE CABECERA -->
+  <!-- FIN DE TABLA -->
+  
+   <!-- CABECERAS -->
+  <div class="display-1 text-center py-3 alert alert-primary" role="alert">
+    <h4>SEGUIMIENTO NOMINAL</h4>
+  </div>
+  <!-- FIN DE CABECERA -->
+  
   <!-- SEGUIMIENTO -->
   <div class="row">
     <div class="col-md-3">
@@ -138,6 +491,6 @@
       </div>
     </div>
   </div>
-    <!------------->  
+   <!-- FIN DE SEGUIMIENTO ----------->  
 </main>
 {% endblock %}

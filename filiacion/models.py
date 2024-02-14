@@ -306,8 +306,57 @@ class RptSeguimientoVisitaDis(models.Model):
 ################################################# 
 ###  PADRON NOMINAL 
 #################################################
-class Item(models.Model):
+class Item_mes(models.Model):
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
+################################################# 
+###  INDICADOR VISITA DOMICILARIA 
+#################################################
+class RptVisita(models.Model):
+    ubigeo  = models.CharField(max_length=50,null=True, blank=True)
+    edad_mes = models.CharField(max_length=50,null=True, blank=True)
+    año = models.CharField(max_length=50,null=True, blank=True)
+    mes = models.CharField(max_length=50,null=True, blank=True)
+    num_doc = models.CharField(max_length=50,null=True, blank=True)
+    fecha_nac = models.CharField(max_length=50,null=True, blank=True)
+    seguro = models.CharField(max_length=50,null=True, blank=True)
+    ap_paterno = models.CharField(max_length=50,null=True, blank=True)
+    ap_materno = models.CharField(max_length=50,null=True, blank=True)
+    nom_nino = models.CharField(max_length=50,null=True, blank=True)
+    direccion = models.CharField(max_length=250,null=True, blank=True)
+    visitado = models.CharField(max_length=50,null=True, blank=True)
+    encontrado = models.CharField(max_length=50,null=True, blank=True)
+    dni_mama = models.CharField(max_length=50,null=True, blank=True)
+    num_cel = models.CharField(max_length=50,null=True, blank=True)
+    pn_reg = models.CharField(max_length=50,null=True, blank=True)
+    Id_Establecimiento = models.CharField(max_length=50,null=True, blank=True)
+    den = models.IntegerField(null=True, blank=True)
+    num =models.IntegerField(null=True, blank=True)
+    renaes1 = models.CharField(max_length=50,null=True, blank=True)
+    renaes2 = models.CharField(max_length=50,null=True, blank=True)
+    renaes3 = models.CharField(max_length=50,null=True, blank=True)
+    renaes4 = models.CharField(max_length=50,null=True, blank=True)
+    visita1 = models.IntegerField(null=True, blank=True)
+    visita2 = models.IntegerField(null=True, blank=True)
+    visita3 = models.IntegerField(null=True, blank=True)
+    visita4 = models.IntegerField(null=True, blank=True)
+    v_fecha1 = models.CharField(max_length=50,null=True, blank=True)
+    v_fecha2 = models.CharField(max_length=50,null=True, blank=True)
+    v_fecha3 = models.CharField(max_length=50,null=True, blank=True)
+    v_fecha4 = models.CharField(max_length=50,null=True, blank=True)
+    Codigo_Provincia_Inei = models.CharField(max_length=50,null=True, blank=True)
+    Provincia = models.CharField(max_length=50,null=True, blank=True)
+    Codigo_Distrito_Inei = models.CharField(max_length=50,null=True, blank=True)
+    Distrito = models.CharField(max_length=50,null=True, blank=True)
+    Codigo_Red = models.CharField(max_length=50,null=True, blank=True)
+    Red = models.CharField(max_length=50,null=True, blank=True)
+    Codigo_MicroRed = models.CharField(max_length=50,null=True, blank=True)
+    MicroRed = models.CharField(max_length=50,null=True, blank=True)
+    Codigo_Unico = models.CharField(max_length=50,null=True, blank=True)
+    Nombre_Establecimiento = models.CharField(max_length=50,null=True, blank=True)
+
+    def __str__(self):
+        return self.num_doc

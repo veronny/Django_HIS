@@ -4,7 +4,7 @@ from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
 from django.contrib.auth.models import Permission
 from .models import Filiacion, Red, Microred, Establecimiento, Provincia, Distrito, Directorio, DirectorioRed, DirectorioEstablecimiento, rpt_certificado, ActualizaBD, RptVisitaDis, RptSeguimientoVisitaDis, TipoReporte
-
+from .models import RptVisita, Item_mes
 #--------------DIRECTORIO DE MUNICIPIO --------------------------
 class FiliacionResources(resources.ModelResource):
     class Meta:
@@ -305,4 +305,70 @@ class EstablecimientoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     )
     search_fields = ('id','nombre_establecimiento','codigo_unico','cod_red','cod_microred','red_microred',)  
     
+###################################################### 
+###################################################### 
+#----  REPORTE HIS VISITAS -------------
+class RptVisitaResources(resources.ModelResource):
+    class Meta:
+        model = RptVisita
+
+@admin.register(RptVisita)
+class RptVisitaAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = RptVisitaResources
+    list_display = (                                                                              
+                    'id',
+                    'ubigeo',
+                    'edad_mes',
+                    'año',
+                    'mes',
+                    'num_doc',
+                    'fecha_nac',
+                    'seguro',
+                    'ap_paterno',
+                    'ap_materno',
+                    'nom_nino',
+                    'visitado',
+                    'encontrado',
+                    'dni_mama',
+                    'num_cel',
+                    'pn_reg',
+                    'Id_Establecimiento',
+                    'den',
+                    'num',
+                    'renaes1',
+                    'renaes2',
+                    'renaes3',
+                    'renaes4',
+                    'visita1' ,
+                    'visita2',
+                    'visita3',
+                    'visita4',
+                    'Codigo_Provincia_Inei',
+                    'Provincia',
+                    'Codigo_Distrito_Inei',
+                    'Distrito',
+                    'Codigo_Red',
+                    'Red',
+                    'Codigo_MicroRed',
+                    'MicroRed',
+                    'Codigo_Unico',
+                    'Nombre_Establecimiento',
+    )
+    search_fields = ('id','ubigeo','edad_mes','año','mes','num_doc','fecha_nac','seguro', 'ap_paterno','ap_materno','nom_nino','visitado','encontrado','dni_mama',
+                     'num_cel','pn_reg','Id_Establecimiento','Codigo_Provincia_Inei','Provincia','Codigo_Distrito_Inei','Distrito','Codigo_Red','Red','Codigo_MicroRed','MicroRed','Codigo_Unico','Nombre_Establecimiento',)  
+    
+###################################################### 
+#----  ITEM  -------------
+class Item_mesResources(resources.ModelResource):
+    class Meta:
+        model = Item_mes
+
+@admin.register(Item_mes)
+class Item_mesAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = Item_mesResources
+    list_display = (                                                          
+                    'id',
+                    'name', 
+    )
+    search_fields = ('id','name',)  
     

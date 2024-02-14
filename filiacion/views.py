@@ -10,7 +10,7 @@ from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 from .models import Filiacion, Directorio, DirectorioRed, DirectorioEstablecimiento, Diresa, Provincia, Distrito, Red, Microred, Establecimiento 
-from .models import rpt_certificado, ActualizaBD,RptVisitaDis,RptSeguimientoVisitaDis, TipoReporte
+from .models import rpt_certificado, ActualizaBD, RptVisitaDis, RptSeguimientoVisitaDis,RptVisita, TipoReporte, Item_mes
 
 # report excel
 from django.http.response import HttpResponse
@@ -24,6 +24,11 @@ from django.views import View
 
 # graficos
 from random import randrange
+
+# tablas por redes
+from django.db.models import Sum, F, FloatField, ExpressionWrapper
+from django.db.models.functions import Cast, Round
+
 
 def home(request):
     actualiza = ActualizaBD.objects.all()
@@ -967,22 +972,454 @@ class RptDiscapacidad2(View):
 
         return results
 
-
-#############################################
-# SITUACION PADRON NOMINAL 
-#############################################
-
+#################################################
+# SITUACION PADRON NOMINAL - VISITA DOMICILARIO
+################################################
 def index(request):
-    provincias = Provincia.objects.all()
-    return render(request, 'padron/situacion/index.html', {'provincias': provincias})
+    t_mes = 2
+    r_chyo = 'CHANCHAMAYO'
+    r_jauja = 'JAUJA'
+    r_junin = 'JUNIN'
+    r_pki = 'PICHANAKI'
+    r_chupaca = 'RED DE SALUD CHUPACA'
+    r_pangoa = 'SAN MARTIN DE PANGOA'
+    r_satipo = 'SATIPO'
+    r_tarma = 'TARMA'
+    r_valle = 'VALLE DEL MANTARO'
+    
+    t_chyo = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                            suma_num=Sum('num'), 
+                                                            suma_den=Sum('den'),
+                                                            suma_v1=Sum('visita1'),
+                                                            suma_v2=Sum('visita2'),
+                                                            suma_v3=Sum('visita3'),
+                                                            suma_v4=Sum('visita4')
+                                                            ).annotate(
+                                                                porcentaje=ExpressionWrapper(
+                                                                    (F('suma_num') * 100.0) / F('suma_den'),
+                                                                    output_field=FloatField()
+                                                                )
+                                                            ).filter(Red=r_chyo).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                            
+    t_jauja = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                            suma_num=Sum('num'), 
+                                                            suma_den=Sum('den'),
+                                                            suma_v1=Sum('visita1'),
+                                                            suma_v2=Sum('visita2'),
+                                                            suma_v3=Sum('visita3'),
+                                                            suma_v4=Sum('visita4')
+                                                            ).annotate(
+                                                                porcentaje=ExpressionWrapper(
+                                                                    (F('suma_num') * 100.0) / F('suma_den'),
+                                                                    output_field=FloatField()
+                                                                )
+                                                            ).filter(Red=r_jauja).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+
+    t_junin = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_junin).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        
+    t_pki = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_pki).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        
+    t_chupaca = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_chupaca).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        
+    t_pangoa = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_pangoa).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                         
+    t_satipo = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_satipo).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        
+    t_tarma = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_tarma).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        
+    t_valle = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den'),
+                                                        suma_v1=Sum('visita1'),
+                                                        suma_v2=Sum('visita2'),
+                                                        suma_v3=Sum('visita3'),
+                                                        suma_v4=Sum('visita4')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).filter(Red=r_valle).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+    
+
+    context = {
+                't_chyo'    : t_chyo,
+                't_jauja'   : t_jauja,
+                't_junin'   : t_junin,
+                't_pki'     : t_pki,
+                't_chupaca' : t_chupaca,
+                't_pangoa'  : t_pangoa,
+                't_satipo'  : t_satipo,
+                't_tarma'   : t_tarma,
+                't_valle'   : t_valle,
+              }
+    
+    return render(request, 'padron/situacion/index.html', context)
 
 #--- PROVINCIAS -------------------------------------------------------------
 def get_provincias(request,provincias_id):
     provincias = Provincia.objects.all()
+    meses = Item_mes.objects.all()
     context = {
-                'provincias': provincias
+                'provincias': provincias,
+                'meses':meses
               }
     return render(request, 'padron/situacion/provincias.html', context)
+
+#--- PROVINCIAS EXCEL -------------------------------------------------------------
+class RptProvinciaVistaExcel(TemplateView):
+    def get(self,request,*args,**kwargs):
+        # creacion de la consulta
+        fecha_inicio = request.GET.get('fecha_inicio')
+        fecha_fin = request.GET.get('fecha_fin') 
+        provincia = request.GET.get('provincia')
+        
+        query = RptVisita.objects.filter(mes__range=[fecha_inicio, fecha_fin]).filter(ubigeo__startswith=provincia).order_by('ap_paterno','ap_materno','nom_nino','Provincia','Distrito')
+
+        print(query)
+        # creacion de archivo
+        wb = Workbook() #crea libro de trabajo
+        ws = wb.active #Primera hoja
+
+        # crea titulo del reporte
+        ws['A1'].alignment = Alignment(horizontal= "center", vertical="center")
+        ws['A1'].font = Font(name = 'Arial', size= 14, bold = True)
+        ws['A1'] = 'REPORTE DE SEGUIMIENTO VISITA DOMICILIARIA'
+        # cambina celdas
+        ws.merge_cells('A1:J1')
+
+        ws['B3'].alignment = Alignment(horizontal= "left", vertical= "center")
+        ws['B3'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B3'].font = Font(name = 'Arial', size= 8)
+        ws['B3'] = 'Fecha Inicio'
+        
+        ws['C3'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C3'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['C3'].font = Font(name = 'Arial', size= 8)
+        ws['C3'].value = fecha_inicio
+    
+        ws['B4'].alignment = Alignment(horizontal= "left", vertical= "center")
+        ws['B4'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B4'].font = Font(name = 'Arial', size= 8)
+        ws['B4'] = 'Fecha Fin'
+        
+        ws['C4'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C4'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['C4'].font = Font(name = 'Arial', size= 8)
+        ws['C4'].number_format = "dd-mm-yyyy"
+        ws['C4'].value = fecha_fin
+        
+        # cambia el alto de la columna
+        ws.row_dimensions[1].height = 25
+        # cambia el ancho de la columna
+        ws.column_dimensions['B'].width = 10
+        ws.column_dimensions['C'].width = 10
+        ws.column_dimensions['D'].width = 39
+        ws.column_dimensions['E'].width = 10
+        ws.column_dimensions['F'].width = 39
+        ws.column_dimensions['G'].width = 10
+        ws.column_dimensions['H'].width = 39
+        ws.column_dimensions['I'].width = 10
+        ws.column_dimensions['J'].width = 39
+        # linea de division
+        ws.freeze_panes = 'AL8'
+
+        # crea cabecera
+        ws['B6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['B6'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['B6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['B6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['B6'] = 'DNI'
+        ws.merge_cells('B6:B7')
+
+        ws['C6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['C6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['C6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['C6'] = '1° VISITA'
+        ws.merge_cells('C6:D6')
+        
+        ws['C7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['C7'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['C7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['C7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['C7'] = 'FECHA'
+
+        ws['D7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['D7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['D7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['D7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['D7'] = 'ESTABLECIMIENTO'
+        ##
+        ws['E6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['E6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['E6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['E6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['E6'] = '2° VISITA'
+        ws.merge_cells('E6:F6')
+        
+        ws['E7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['E7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['E7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['E7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['E7'] = 'FECHA'
+
+
+        ws['F7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['F7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['F7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['F7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['F7'] = 'ESTABLECIMIENTO'
+
+        ws['G6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['G6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['G6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['G6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['G6'] = '3° VISITA'
+        ws.merge_cells('G6:H6')
+        
+        ws['G7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['G7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['G7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['G7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['G7'] = 'FECHA'
+        # celda 
+        ws['H7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['H7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['H7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['H7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['H7'] = 'ESTABLECIMIENTO'
+        # celda 
+        ws['I6'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['I6'].border = Border(left = Side(border_style = "thin"), 
+                                     right = Side(border_style = "thin"), 
+                                     top = Side(border_style = "thin"), 
+                                     bottom = Side(border_style = "thin"))
+        ws['I6'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['I6'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['I6'] = '4° VISITA'
+        ws.merge_cells('I6:J6')
+        
+        
+        ws['I7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['I7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['I7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['I7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['I7'] = 'FECHA'
+        # celda 
+        ws['J7'].alignment = Alignment(horizontal= "center", vertical= "center")
+        ws['J7'].border = Border(left = Side(border_style = "thin"), 
+                                 right = Side(border_style = "thin"), 
+                                 top = Side(border_style = "thin"), 
+                                 bottom = Side(border_style = "thin"))
+        ws['J7'].fill = PatternFill(start_color = 'DDF2FD', end_color='DDF2FD', fill_type="solid")
+        ws['J7'].font = Font(name = 'Arial', size= 9, bold = True)
+        ws['J7'] = 'ESTABLECIMIENTO'
+
+        # Pintamos los datos del reporte - RED
+        cont = 8       
+        for q in query:   
+            ws.cell(row = cont , column=2).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=2).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=2).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column=2).value = q.num_doc
+
+            ws.cell(row = cont , column=3).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=3).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=3).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column=3).value = q.ap_paterno
+            
+            ws.cell(row = cont , column=4).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=4).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=4).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 4).value = q.ap_materno
+            
+            ws.cell(row = cont , column=5).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=5).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=5).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 5).value = q.nom_nino
+            
+            ws.cell(row = cont , column=6).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=6).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=6).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 6).value = q.fecha_nac
+            
+            ws.cell(row = cont , column=7).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=7).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=7).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 7).value = q.edad_mes
+            
+            ws.cell(row = cont , column=8).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=8).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=8).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 8).value = q.visitado
+            
+            ws.cell(row = cont , column=9).alignment = Alignment(horizontal="center")
+            ws.cell(row = cont , column=9).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=9).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 9).value = q.encontrado
+            
+            ws.cell(row = cont , column=10).alignment = Alignment(horizontal="left")
+            ws.cell(row = cont , column=10).border = Border(left = Side(border_style = "thin"), 
+                                                                right = Side(border_style = "thin"), 
+                                                                top = Side(border_style = "thin"), 
+                                                                bottom = Side(border_style = "thin"))
+            ws.cell(row = cont , column=10).font = Font(name = 'Calibri', size= 8)
+            ws.cell(row = cont , column= 10).value = q.pn_reg
+            
+            cont+=1
+               
+        #Respuesta de Django
+        #Establecer el nombre del archivo
+        nombre_archivo = "rpt_seg_visita.xlsx"
+        #Definir el tipo de respuesta que se va a dar
+        response = HttpResponse(content_type = "application/ms-excel")
+        contenido = "attachment; filename = {0}".format(nombre_archivo)
+        response["Content-Disposition"] = contenido
+        wb.save(response)
+        return response
+
 #--- DISTRITOS -------------------------------------------------------------
 def get_distritos(request, distritos_id):
     provincias = Provincia.objects.all()
@@ -1039,32 +1476,30 @@ def p_establecimientos(request):
              }
     return render(request, 'padron/situacion/partials/p_establecimientos.html', context)
 
-#---  PADRON NOMINAL GRAFICOS------------------------------------------------
+#---  VISITA GRAFICOS------------------------------------------------
 def get_chart(_request):
     # Consulta para obtener los datos de ventas
 
     # Formatear los datos para pasarlos a la plantilla
-
     colors = ['#5470C6', '#91CC75', '#EE6666'];   
     
-    serie=[]
-    counter = 0
-    
-    while(counter<12):
-        serie.append(randrange(100,400))
-        counter += 1
+    serie=['18060','18230']
+    ## counter = 0
+    ## while(counter<12):
+    ##      serie.append(randrange(100,400))
+    ##      counter += 1
 
-    serie2=[]
-    counter2 = 0
-    while(counter2<12):
-        serie2.append(randrange(100,400))
-        counter2 += 1
+    serie2=['1710','832']
+    ## counter2 = 0
+    ## while(counter2<12):
+    ##     serie2.append(randrange(100,400))
+    ##     counter2 += 1
         
-    serie3=[]
-    counter3 = 0
-    while(counter3<12):
-        serie3.append(randrange(0,100))
-        counter3 += 1
+    serie3=['10.0','4.6']
+    ## counter3 = 0
+    ## while(counter3<12):
+    ##     serie3.append(randrange(0,100))
+    ##     counter3 += 1
    
     chart = {
         'tooltip':{
@@ -1072,6 +1507,8 @@ def get_chart(_request):
             'trigger': "axis",
             'triggerOn': "mousemove|click"    
         },
+        'legend':{# Nombre para la leyenda
+        },       
         'xAxis':[
             {
                 'type':"category",
@@ -1090,14 +1527,17 @@ def get_chart(_request):
         ],
         'series':[
             {
+                'name': 'Meta',
                 'data': serie,
                 'type': "bar",
             }, 
             {
+                'name': 'Avance',
                 'data': serie2,
                 'type': "bar",
             },
             {
+                'name': 'Porcentaje',
                 'data': serie3,
                 'type': "line",
             },             

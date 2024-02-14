@@ -2,6 +2,7 @@
 from django.urls import path
 from .views import index, get_distritos, p_distritos, get_redes, get_provincias, get_microredes, p_microredes 
 from .views import get_establecimientos,p_establecimientos, get_chart
+from .views import RptProvinciaVistaExcel
 
 app_name = 'filiacion'
 
@@ -11,6 +12,8 @@ urlpatterns = [
     path('padron/', index, name='padron_index'),
     # provincia
     path('get_provincias/<int:provincias_id>/', get_provincias, name='get_provincias'),
+    #-- excel
+    path('rpt_seguimiento_visita_excel/', RptProvinciaVistaExcel.as_view(), name = 'rpt_seg_visita_xls'),
     # distrito
     path('get_distritos/<int:distritos_id>/', get_distritos, name='get_distritos'),
     path('p_distritos/', p_distritos, name='p_distritos'),
@@ -24,5 +27,9 @@ urlpatterns = [
     path('p_establecimiento/', p_establecimientos, name='p_establecimientos'),
     # graficos
     path('get_chart/', get_chart, name='get_chart'),
+    
+    # SEGUIMIENTO VISITAS 
+    #path('rpt_seguimiento_visita_dis/', views.listar_rpt_seguimiento_visita_dis, name='rpt_seguimiento_visita_dis'),
+    #path('reporte_seguimiento_visita_dis/', RptSeguimientoVistaDisExcel.as_view(), name = 'reporte_seguimiento_visita_dis'),
     
 ]
