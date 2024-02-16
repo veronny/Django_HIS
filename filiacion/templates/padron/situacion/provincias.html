@@ -41,6 +41,7 @@
                 <div class="form-group">
                     <label class="text-primary" for="provincia">Provincia :</label>
                     <select class="form-control" name="provincia">
+                        <option value="">--- SELECCIONAR ---</option>
                         {% for p in provincias %}
                         <option value="{{ p.ubigeo }}">{{ p.nombre_provincia }} </option>
                         {% endfor %}

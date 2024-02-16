@@ -5,7 +5,8 @@
             <div class="col-md-6 offset-md-3 text-center py-1 text-primary">
                 <h4>POR DISTRITO</h4>
             </div>
-          <form method="GET" enctype="multipart/form-data" action="{% url 'reporte' %}">
+          <form method="GET" enctype="multipart/form-data" action="{% url 'filiacion:rpt_seg_visita_distrito' %}">
+             <!-- cabecera-->
             <div class="form row">
                 <div class="col-md-4 form-group">
                     <div class="form-group">
@@ -15,17 +16,26 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <div class="form-group">
-                      <label class="text-danger" for="fecha_inicio">Fecha Inicio:</label>
-                      <input class="form-control form-select-sm" type="date" id="fecha_inicio" name="fecha_inicio">
+                      <label class="text-danger" for="fecha_inicio">Mes Inicio:</label>
+                      <select class="form-control" name="fecha_inicio">
+                        {% for m in meses %}
+                        <option value="{{ m.id }}">{{ m.name }} </option>
+                        {% endfor %}
+                      </select>
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <div class="form-group">
-                      <label class="text-danger" for="fecha_fin">Fecha Fin:</label>
-                      <input class="form-control form-select-sm" type="date" id="fecha_fin" name="fecha_fin">
+                      <label class="text-danger" for="fecha_fin">Mes Fin:</label>
+                      <select class="form-control" name="fecha_fin">
+                        {% for m in meses %}
+                        <option value="{{ m.id }}">{{ m.name }} </option>
+                        {% endfor %}
+                      </select>
                     </div>
                 </div>
-            </div>                      
+            </div>
+            <!-- fin cabecera-->                        
             <div class="form row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -39,7 +49,7 @@
                 </div>
               </div>
             </div>
-            <!--- INCLUDE DROP INCLUYENTE --->
+           <!--- INCLUDE DROP INCLUYENTE --->
             <div class="form row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -49,7 +59,7 @@
                   </div>
                 </div>
             </div> 
-
+           
             <!--- FIN INCLUDE DROP INCLUYENTE --->
             <br>        
             <div class="col-md-6 offset-md-3 text-center py-1 form-group">        

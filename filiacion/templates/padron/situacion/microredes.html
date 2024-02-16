@@ -16,14 +16,22 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <div class="form-group">
-                      <label class="text-danger" for="fecha_inicio">Fecha Inicio:</label>
-                      <input class="form-control form-select-sm" type="date" id="fecha_inicio" name="fecha_inicio">
+                      <label class="text-danger" for="fecha_inicio">Mes Inicio:</label>
+                      <select class="form-control" name="fecha_inicio">
+                        {% for m in meses %}
+                        <option value="{{ m.id }}">{{ m.name }} </option>
+                        {% endfor %}
+                      </select>
                     </div>
                 </div>
                 <div class="col-md-4 form-group">
                     <div class="form-group">
-                      <label class="text-danger" for="fecha_fin">Fecha Fin:</label>
-                      <input class="form-control form-select-sm" type="date" id="fecha_fin" name="fecha_fin">
+                      <label class="text-danger" for="fecha_fin">Mes Fin:</label>
+                      <select class="form-control" name="fecha_fin">
+                        {% for m in meses %}
+                        <option value="{{ m.id }}">{{ m.name }} </option>
+                        {% endfor %}
+                      </select>
                     </div>
                 </div>
             </div>
