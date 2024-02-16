@@ -4,25 +4,72 @@
 
 <main class="container">
   <br>
-  <!-- CABECERAS -->
-  <div class="display-1 text-center py-3 alert alert-primary" role="alert">
+  <!-- CABECERAS INDICADOR -->
+  <div class="display-1 text-center py-3 alert alert-secondary" role="alert">
     <h4>NIÑ@S MENORES 12 MESES QUE RECIBEN 04 CONSEJERIAS A TRAVES DE VISITA DOMICILIARIA</h4>
   </div>
   <!-- FIN DE CABECERA -->
   
-  <!-- GRAFICO -->
   <div class="row">
     <div class="col-md-12">
       <section class="card card-body shadow mb-2">
-        <div id="chart" class="chart"></div>
-
+        <!-- link de tap -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" style="font-size: 13px;" id="region-tab" data-toggle="tab" href="#region" role="tab" aria-controls="region" aria-selected="true"><i class="fa fa-chart-line"></i> AVANCE REGIONAL</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="red-tab" data-toggle="tab" href="#red" role="tab" aria-controls="red" aria-selected="false"><i class="fa fa-chart-bar"></i> RANKING POR REDES</a>
+            </li>    
+        </ul>
+        <!-- fin link de tap -->
+        <div class="tab-content" id="myTabContent">
+          <!-- contenido de tap -->
+              <div class="tab-pane fade show active" id="region" role="tabpanel" aria-labelledby="region-tab">
+                <div id="chart" class="chart"></div>
+              </div>
+              
+              <div class="tab-pane fade" id="red" role="tabpanel" aria-labelledby="red-tab">
+              </br>
+              <table class="table table-bordered" id="table_red" style="font-size: 14px;">
+                <thead>
+                    <tr style="background-color: #FAF4F3;">
+                        <th style="text-align:center;font-size: 13px;">RED DE SALUD</th>
+                        <th style="text-align:center;font-size: 13px;">DEN</th>
+                        <th style="text-align:center;font-size: 13px;">NUM</th>
+                        <th style="text-align:center;font-size: 13px;">POR (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in t_red %}
+                        <tr>
+                            <td>{{ i.Red }}</td>
+                            <td style="text-align:right;">{{ i.suma_den }}</td>
+                            <td style="text-align:right;">{{ i.suma_num }}</td>
+                         
+                            <td style="text-align:right;">
+                              {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                              {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                              {% else %}
+                                <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                              {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table><!-- Tabla para REDES -->
+              </div>
+          <!-- fin contenido de tap -->   
         </div>
       </section>
+    </div>  
   </div>
-  <!-- FIN DE GRAFICO -->
-  <!-- CABECERAS -->
+  
+  <!-- CABECERA AVANCE INDICADOR -->
   <div class="display-1 text-center py-3 alert alert-primary" role="alert">
-    <h4>AVANCE DETALLADO DEL INDICADOR</h4>
+    <h4><i class="fa fa-hospital"></i> AVANCE POR ESTABLECIMIENTO DEL INDICADOR</h4>
   </div>
   <!-- FIN DE CABECERA -->
   <!-- TABLA DETALLADO -->
@@ -32,31 +79,31 @@
           <!-- link de tap -->
           <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
-                  <a class="nav-link active" style="font-size: 14px;" id="chyo-tab" data-toggle="tab" href="#chyo" role="tab" aria-controls="chyo" aria-selected="true">CHANCHAMAYO</a>
+                  <a class="nav-link active" style="font-size: 13px;" id="chyo-tab" data-toggle="tab" href="#chyo" role="tab" aria-controls="chyo" aria-selected="true"><i class="fa fa-clinic-medical"></i> CHANCHAMAYO</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" style="font-size: 14px;" id="jauja-tab" data-toggle="tab" href="#jauja" role="tab" aria-controls="jauja" aria-selected="false">JAUJA</a>
+                  <a class="nav-link" style="font-size: 13px;" id="jauja-tab" data-toggle="tab" href="#jauja" role="tab" aria-controls="jauja" aria-selected="false"><i class="fa fa-clinic-medical"></i> JAUJA</a>
               </li>
               <li class="nav-item">
-                    <a class="nav-link" style="font-size: 14px;" id="junin-tab" data-toggle="tab" href="#junin" role="tab" aria-controls="junin" aria-selected="false">JUNIN</a>
+                    <a class="nav-link" style="font-size: 13px;" id="junin-tab" data-toggle="tab" href="#junin" role="tab" aria-controls="junin" aria-selected="false"><i class="fa fa-clinic-medical"></i> JUNIN</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" style="font-size: 14px;" id="pki-tab" data-toggle="tab" href="#pki" role="tab" aria-controls="pki" aria-selected="false">PICHANAKI</a>
+                  <a class="nav-link" style="font-size: 13px;" id="pki-tab" data-toggle="tab" href="#pki" role="tab" aria-controls="pki" aria-selected="false"><i class="fa fa-clinic-medical"></i> PICHANAKI</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" style="font-size: 14px;" id="chupaca-tab" data-toggle="tab" href="#chupaca" role="tab" aria-controls="chupaca" aria-selected="false">CHUPACA</a>
+                  <a class="nav-link" style="font-size: 13px;" id="chupaca-tab" data-toggle="tab" href="#chupaca" role="tab" aria-controls="chupaca" aria-selected="false"><i class="fa fa-clinic-medical"></i> CHUPACA</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="pangoa-tab" data-toggle="tab" href="#pangoa" role="tab" aria-controls="pangoa" aria-selected="false">PANGOA</a>
+                <a class="nav-link" style="font-size: 13px;" id="pangoa-tab" data-toggle="tab" href="#pangoa" role="tab" aria-controls="pangoa" aria-selected="false"><i class="fa fa-clinic-medical"></i> PANGOA</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="satipo-tab" data-toggle="tab" href="#satipo" role="tab" aria-controls="satipo" aria-selected="false">SATIPO</a>
+                <a class="nav-link" style="font-size: 13px;" id="satipo-tab" data-toggle="tab" href="#satipo" role="tab" aria-controls="satipo" aria-selected="false"><i class="fa fa-clinic-medical"></i> SATIPO</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="tarma-tab" data-toggle="tab" href="#tarma" role="tab" aria-controls="tarma" aria-selected="false">TARMA</a>
+                <a class="nav-link" style="font-size: 13px;" id="tarma-tab" data-toggle="tab" href="#tarma" role="tab" aria-controls="tarma" aria-selected="false"><i class="fa fa-clinic-medical"></i> TARMA</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" style="font-size: 14px;" id="valle-tab" data-toggle="tab" href="#valle" role="tab" aria-controls="valle" aria-selected="false">VALLE DEL MANTARO</a>
+                <a class="nav-link" style="font-size: 13px;" id="valle-tab" data-toggle="tab" href="#valle" role="tab" aria-controls="valle" aria-selected="false"><i class="fa fa-clinic-medical"></i> VALLE DEL MANTARO</a>
               </li>               
           </ul>
           <!-- fin link de tap -->
@@ -456,12 +503,11 @@
     </div>
   <!-- FIN DE TABLA -->
   
-   <!-- CABECERAS -->
-  <div class="display-1 text-center py-3 alert alert-primary" role="alert">
-    <h4>SEGUIMIENTO NOMINAL</h4>
+   <!-- CABECERA SEGUIMIENTO-->
+  <div class="display-1 text-center py-3 alert alert-warning" role="alert">
+    <h4><i class="fa fa-running"></i> SEGUIMIENTO NOMINAL</h4>
   </div>
   <!-- FIN DE CABECERA -->
-  
   <!-- SEGUIMIENTO -->
   <div class="row">
     <div class="col-md-3">
@@ -469,12 +515,12 @@
         <div hx-target="#content" hx-swap="innerHTML" hx-indicator="#loading">
           <ul class="list-group">
               <a href="#" class="list-group-item list-group-item-action active">TIPO DE REPORTE</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_provincias' 1 %}" hx-swap="innerHTML" hx-trigger="click">Provincia</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_distritos' 1 %}" hx-swap="innerHTML" hx-trigger="click">Distrito</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_redes' 1 %}" hx-swap="innerHTML" hx-trigger="click">Red</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_microredes' 1 %}" hx-swap="innerHTML" hx-trigger="click">Microred</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_establecimientos' 1 %}" hx-swap="innerHTML" hx-trigger="click">Establecimiento de Salud</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">DNI</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_provincias' 1 %}" hx-swap="innerHTML" hx-trigger="click">PROVINCIA</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_distritos' 1 %}" hx-swap="innerHTML" hx-trigger="click">DISTRITO</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_redes' 1 %}" hx-swap="innerHTML" hx-trigger="click">RED</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_microredes' 1 %}" hx-swap="innerHTML" hx-trigger="click">MICRORED</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_establecimientos' 1 %}" hx-swap="innerHTML" hx-trigger="click">ESTABLECIMIENTO</a>
+              <!-- <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">DNI</a> -->
           </ul>
         </div>
       </section>

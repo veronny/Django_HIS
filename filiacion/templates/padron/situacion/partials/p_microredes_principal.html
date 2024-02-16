@@ -1,0 +1,9 @@
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@1.9.2/dist/htmx.js"></script>
+
+<label class="text-primary" for="p_microredes" name="p_microredes">Microred : </label>
+    <select class="form-control custom-select" name="microredes" hx-get="{% url 'filiacion:rpt_seg_visita_microred' %}" hx-trigger="change">
+        {% for m in microredes %}
+        <option value="{{ m.cod_microred }}">{{ m.nombre_microred }}</option>
+        {% endfor %}
+    </select>

@@ -5,7 +5,7 @@
             <div class="col-md-6 offset-md-3 text-center py-1 text-primary">
                 <h4>POR MICROREDES</h4>
             </div>
-          <form method="GET" enctype="multipart/form-data" action="{% url 'reporte' %}">
+          <form method="GET" enctype="multipart/form-data" action="{% url 'filiacion:rpt_seg_visita_microred' %}">
             <!--  cabecera -->   
             <div class="form row">
                 <div class="col-md-4 form-group">
@@ -40,7 +40,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                     <label class="text-primary" for="redes">Red: </label>
-                    <select class="form-control" name="redes" hx-get="{% url 'filiacion:p_microredes' %}" hx-trigger="change" hx-target="#p_microredes">
+                    <select class="form-control" name="redes" hx-get="{% url 'filiacion:p_microredes_principal' %}" hx-trigger="change" hx-target="#p_microredes">
                         <option value="">--- SELECCIONAR ---</option>
                         {% for r in redes %}
                         <option value="{{ r.cod_red }}">{{ r.nombre_red }} </option>
@@ -54,7 +54,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <div id="p_microredes">
-                        {% include 'padron/situacion/partials/p_microredes.html' %}
+                        {% include 'padron/situacion/partials/p_microredes_principal.html' %}
                     </div>
                   </div>
                 </div>

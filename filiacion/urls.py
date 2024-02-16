@@ -1,8 +1,8 @@
 # miapp/urls.py
 from django.urls import path
-from .views import index, get_distritos, p_distritos, get_redes, get_provincias, get_microredes, p_microredes 
+from .views import index, get_distritos, p_distritos, get_redes, get_provincias, get_microredes, p_microredes, p_microredes_principal
 from .views import get_establecimientos,p_establecimientos, get_chart
-from .views import RptProvinciaVistaExcel, RptDistritoVistaExcel, RptRedVistaExcel, RptMicroredVistaExcel
+from .views import RptProvinciaVistaExcel, RptDistritoVistaExcel, RptRedVistaExcel, RptMicroredVistaExcel, RptEstablecimientoVistaExcel
 
 app_name = 'filiacion'
 
@@ -28,6 +28,7 @@ urlpatterns = [
     
     # microred
     path('get_microredes/<int:microredes_id>/', get_microredes, name='get_microredes'),
+    path('p_microredes_principal/', p_microredes_principal, name='p_microredes_principal'),
     path('p_microredes/', p_microredes, name='p_microredes'),
     #-- microred excel
     path('rpt_seg_visita_microred/', RptMicroredVistaExcel.as_view(), name = 'rpt_seg_visita_microred'),
@@ -35,6 +36,11 @@ urlpatterns = [
     # establecimientos
     path('get_establecimientos/<int:establecimiento_id>/', get_establecimientos, name='get_establecimientos'),
     path('p_establecimiento/', p_establecimientos, name='p_establecimientos'),
+    #-- establecimiento excel
+    path('rpt_seg_visita_establecimiento/', RptEstablecimientoVistaExcel.as_view(), name = 'rpt_seg_visita_establecimiento'),
+    
+    
+    
     # graficos
     path('get_chart/', get_chart, name='get_chart'),
     
