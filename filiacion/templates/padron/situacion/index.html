@@ -1,9 +1,9 @@
 {% extends 'base.html' %} 
 {% block content %}
 {% load static %}
+{% if user.is_authenticated %}
 
-<main class="container">
-  <br>
+<div class="col py-3">
   <!-- CABECERAS INDICADOR -->
   <div class="display-1 text-center py-3 alert alert-secondary" role="alert">
     <h4>NIÑ@S MENORES 12 MESES QUE RECIBEN 04 CONSEJERIAS A TRAVES DE VISITA DOMICILIARIA</h4>
@@ -538,5 +538,6 @@
     </div>
   </div>
    <!-- FIN DE SEGUIMIENTO ----------->  
-</main>
+</div>
+{% endif %}
 {% endblock %}

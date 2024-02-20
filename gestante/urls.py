@@ -13,6 +13,7 @@ from filiacion.views import home, ReportePersonalizadoExcel, RptVistaDisExcel, R
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('inicio/', views.home_dashboard, name='home_dashboard'),
     path('signup/', views.signup, name='signup'),
     path('logout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),

@@ -39,6 +39,14 @@ def home(request):
                 }    
     return render(request, 'home.html', context)
 
+@login_required
+def home_dashboard(request):
+    actualiza = ActualizaBD.objects.all()
+    context = {
+                'actualiza': actualiza,
+                }    
+    return render(request, 'home_dashboard.html', context)
+
 # ----- DIRECTORIO MUNICIPIO --------------------
 @login_required
 def filiacion(request):
@@ -82,7 +90,7 @@ def signin(request):
             return render(request, 'signin.html', {"form": AuthenticationForm, "error": "Username or password is incorrect."})
 
         login(request, user)
-        return redirect('home')
+        return redirect('home_dashboard')
 
 def signup(request):
     if request.method == 'GET':
@@ -96,7 +104,7 @@ def signup(request):
                     username=request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('home')
+                return redirect('home_dashboard')
             except IntegrityError:
                 return render(request, 'signup.html', {
                     'form': UserCreationForm,
@@ -977,7 +985,7 @@ class RptDiscapacidad2(View):
 ################################################
 # SITUACION PADRON NOMINAL - VISITA DOMICILARIO
 ################################################
-
+@login_required
 def index(request):
     t_mes = 2
     r_chyo = 'CHANCHAMAYO'
@@ -1146,6 +1154,7 @@ def index(request):
 # GRAFICOS
 ################################################
 #---  VISITA GRAFICOS PRINCIPAL ------------------------------------------------
+@login_required
 def get_chart(_request):
     # Consulta para obtener los datos de ventas
 

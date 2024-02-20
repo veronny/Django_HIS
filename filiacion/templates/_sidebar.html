@@ -1,69 +1,68 @@
 {% load static %}
 
-<nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-  <div class="sb-sidenav-menu">
-      <div class="nav">
-          <div class="sb-sidenav-menu-heading">Core</div>
-          <a class="nav-link" href="index.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-              Dashboard
-          </a>
-          <div class="sb-sidenav-menu-heading">Interface</div>
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-              <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-              Layouts
-              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-          </a>
-          <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-              <nav class="sb-sidenav-menu-nested nav">
-                  <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                  <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-              </nav>
-          </div>
-          <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-              <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-              Pages
-              <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-          </a>
-          <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-              <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                  <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                      Authentication
-                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                  </a>
-                  <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                      <nav class="sb-sidenav-menu-nested nav">
-                          <a class="nav-link" href="login.html">Login</a>
-                          <a class="nav-link" href="register.html">Register</a>
-                          <a class="nav-link" href="password.html">Forgot Password</a>
-                      </nav>
-                  </div>
-                  <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                      Error
-                      <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                  </a>
-                  <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                      <nav class="sb-sidenav-menu-nested nav">
-                          <a class="nav-link" href="401.html">401 Page</a>
-                          <a class="nav-link" href="404.html">404 Page</a>
-                          <a class="nav-link" href="500.html">500 Page</a>
-                      </nav>
-                  </div>
-              </nav>
-          </div>
-          <div class="sb-sidenav-menu-heading">Addons</div>
-          <a class="nav-link" href="charts.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-              Charts
-          </a>
-          <a class="nav-link" href="tables.html">
-              <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-              Tables
-          </a>
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+          <span class="fs-5 d-none d-sm-inline">Inicio</span>
+        </a>
+        <!-- Menu -->
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link align-middle px-0 text-white">
+              <i class="fs-4 bi-house"></i>
+              <span class="ms-1 d-none d-sm-inline">GENERAL</span>
+            </a>
+          </li>
+          <li>
+            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white"><i class="fs-4 bi-bootstrap"></i>
+              <span class="ms-1 d-none d-sm-inline">ESTRATEGIAS</span></a>
+                <!-- Sub Menu -->
+                <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#submenu2">
+                    <li class="w-100">
+                        <a href="#m_promsa" data-bs-toggle="collapse" class="nav-link px-0"><span class="d-none d-sm-inline"></span> PROMSA</a>
+                            <ul class="collapse nav flex-column ms-1 text-white" id="m_promsa" data-bs-parent="#m_promsa">
+                                <li><a class="nav-link px-0 align-middle text-white" href="{% url 'filiacion:padron_index' %}">INDICADOR DE GESTION</a></li>
+                                <li><a class="nav-link px-0 align-middle text-white" href="#">TRAZADOR NIÑO</a></li>
+                                <li><a class="nav-link px-0 align-middle text-white" href="#">TRAZADOR GESTANTE</a></li>
+                            </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline"></span> DISCAPACIDAD</a>
+                    </li>
+                </ul>
+                <!-- Fin Sub Menu -->
+          </li>
+          <li>
+            <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle text-white">
+              <i class="fs-4 bi-grid"></i>
+              <span class="ms-1 d-none d-sm-inline">PADRON NOMINAL</span>
+            </a>
+            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+              <li class="w-100">
+                <a href="#" class="nav-link px-0">
+                  <span class="d-none d-sm-inline">Situacion</span></a>
+              </li>
+              <li>
+                <a href="#" class="nav-link px-0">
+                  <span class="d-none d-sm-inline">Sello Municipal</span></a>
+              </li>
+              <li>
+                <a href="#" class="nav-link px-0">
+                  <span class="d-none d-sm-inline">Compromiso 1</span></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- Fin de Menu -->
       </div>
+    </div>
+    <div class="col py-3">
+        aqui inicio
+        {% block content %} 
+        {% endblock %}
+    </div>
   </div>
-  <div class="sb-sidenav-footer">
-      <div class="small">Logged in as:</div>
-      Start Bootstrap
-  </div>
-</nav>
+</div>
