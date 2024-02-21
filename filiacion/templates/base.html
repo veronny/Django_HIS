@@ -49,15 +49,16 @@
                           <span> PROMSA</a></span>
                           
                           <ul class="collapse nav flex-column ms-1 text-white" id="m_promsa" data-bs-parent="#m_promsa">
-                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="{% url 'filiacion:padron_index' %}">INDICADOR DE GESTION</a></li>
-                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR NIÑO</a></li>
+                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="{% url 'filiacion:padron_index' %}">TRAZADOR DIT</a></li>
                             <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR GESTANTE</a></li>
+                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR TB/VIH-SIDA</a></li>
+                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR METAX-ZOO</a></li>
+                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR NO TRANSMISIBLES</a></li>
+                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR CANCER</a></li>
+                            <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR SALUD MENTAL</a></li>
                           </ul>
                       </li>
                         
-                        <li>
-                            <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline"></span> DISCAPACIDAD</a>
-                        </li>
                     </ul>
                     <!-- Fin Sub Menu -->
               </li>
@@ -69,15 +70,23 @@
                 <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                   <li class="w-100">
                     <a href="#" class="nav-link px-0">
-                      <span class="d-none d-sm-inline">Situacion</span></a>
+                      <span class="d-none d-sm-inline">SITUACION </span></a>
                   </li>
                   <li>
                     <a href="#" class="nav-link px-0">
-                      <span class="d-none d-sm-inline">Sello Municipal</span></a>
+                      <span class="d-none d-sm-inline">SELLO MUNICIPAL</span></a>
                   </li>
                   <li>
                     <a href="#" class="nav-link px-0">
-                      <span class="d-none d-sm-inline">Compromiso 1</span></a>
+                      <span class="d-none d-sm-inline">DIRECTORIO MUNICIPIO</span></a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link px-0">
+                      <span class="d-none d-sm-inline">DIRECTORIO ESTABLECIMIENTO</span></a>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link px-0">
+                      <span class="d-none d-sm-inline">COMPROMISO 1</span></a>
                   </li>
                 </ul>
               </li>
@@ -105,7 +114,6 @@
     <script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
     <!-- Custom JS -->
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/scripts.js' %}"></script>
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.2/dist/htmx.js"></script>
     <!-- Apache ECharts -->

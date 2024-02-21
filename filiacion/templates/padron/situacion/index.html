@@ -6,7 +6,7 @@
 <div class="col py-3">
   <!-- CABECERAS INDICADOR -->
   <div class="display-1 text-center py-3 alert alert-secondary" role="alert">
-    <h4>NIÑ@S MENORES 12 MESES QUE RECIBEN 04 CONSEJERIAS A TRAVES DE VISITA DOMICILIARIA</h4>
+    <h4>FAMILIAS CON NIÑ@S MENORES 12 MESES QUE RECIBEN ACOMPAÑAMIENTO A TRAVES DE LA CONSEJERIA</h4>
   </div>
   <!-- FIN DE CABECERA -->
   
@@ -16,53 +16,57 @@
         <!-- link de tap -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" style="font-size: 13px;" id="region-tab" data-toggle="tab" href="#region" role="tab" aria-controls="region" aria-selected="true"><i class="fa fa-chart-line"></i> AVANCE REGIONAL</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" style="font-size: 13px;" id="red-tab" data-toggle="tab" href="#red" role="tab" aria-controls="red" aria-selected="false"><i class="fa fa-chart-bar"></i> RANKING POR REDES</a>
-            </li>    
+                <a class="nav-link active" style="font-size: 13px;" id="region-tab" data-toggle="tab" href="#region" role="tab" aria-controls="region" aria-selected="true"><i class="fa fa-chart-line"></i> AVANCE REGIONAL Y RANKING POR REDES</a>
+            </li>  
         </ul>
         <!-- fin link de tap -->
         <div class="tab-content" id="myTabContent">
           <!-- contenido de tap -->
-              <div class="tab-pane fade show active" id="region" role="tabpanel" aria-labelledby="region-tab">
+          <div class="tab-pane fade show active" id="region" role="tabpanel" aria-labelledby="region-tab">
+            <div class="row my-4">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div id="chart" class="chart"></div>
               </div>
-              
-              <div class="tab-pane fade" id="red" role="tabpanel" aria-labelledby="red-tab">
-              </br>
-              <table class="table table-bordered" id="table_red" style="font-size: 14px;">
-                <thead>
-                    <tr style="background-color: #FAF4F3;">
-                        <th style="text-align:center;font-size: 13px;">RED DE SALUD</th>
-                        <th style="text-align:center;font-size: 13px;">DEN</th>
-                        <th style="text-align:center;font-size: 13px;">NUM</th>
-                        <th style="text-align:center;font-size: 13px;">POR (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in t_red %}
-                        <tr>
-                            <td>{{ i.Red }}</td>
-                            <td style="text-align:right;">{{ i.suma_den }}</td>
-                            <td style="text-align:right;">{{ i.suma_num }}</td>
-                         
-                            <td style="text-align:right;">
-                              {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
-                                <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
-                              {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
-                                <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
-                              {% else %}
-                                <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
-                              {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-              </table><!-- Tabla para REDES -->
+            <div>
+            <div class="row my-4">
+              <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">  
+                <div id="chart_ranking" class="chart_ranking"></div>
               </div>
-          <!-- fin contenido de tap -->   
+              <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">  
+                <table class="table table-bordered" id="table_red" style="font-size: 14px;">
+                  <thead>
+                      <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 13px;">RED DE SALUD</th>
+                          <th style="text-align:center;font-size: 13px;">DEN</th>
+                          <th style="text-align:center;font-size: 13px;">NUM</th>
+                          <th style="text-align:center;font-size: 13px;">POR (%)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for i in t_red %}
+                          <tr>
+                              <td>{{ i.Red }}</td>
+                              <td style="text-align:right;">{{ i.suma_den }}</td>
+                              <td style="text-align:right;">{{ i.suma_num }}</td>
+                           
+                              <td style="text-align:right;">
+                                {% if i.porcentaje >= 0 and i.porcentaje < 30 %}
+                                  <span style="color:#CB4335;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                {% elif i.porcentaje >= 30 and  i.porcentaje < 50 %}
+                                  <span style="color:#D4AC0D;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                {% else %}
+                                  <span style="color:#229954;">{{ i.porcentaje|floatformat:"2" }}</span>
+                                {% endif %}
+                              </td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+                </table><!-- Tabla para REDES -->
+              </div>
+            </div>
+          </div>
         </div>
+          <!-- fin contenido de tap -->   
       </section>
     </div>  
   </div>

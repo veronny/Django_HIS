@@ -31,6 +31,7 @@ from django.db.models import Sum, F, FloatField, ExpressionWrapper
 from django.db.models.functions import Cast, Round
 # ht-get por distrito
 from django.urls import reverse
+import json
 
 def home(request):
     actualiza = ActualizaBD.objects.all()
@@ -987,7 +988,6 @@ class RptDiscapacidad2(View):
 ################################################
 @login_required
 def index(request):
-    t_mes = 2
     r_chyo = 'CHANCHAMAYO'
     r_jauja = 'JAUJA'
     r_junin = 'JUNIN'
@@ -1006,7 +1006,7 @@ def index(request):
                                                                     (F('suma_num') * 100.0) / F('suma_den'),
                                                                     output_field=FloatField()
                                                                 )
-                                                            ).filter(mes=t_mes).order_by('Red')
+                                                            ).order_by('Red')
     
     t_chyo = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                             suma_num=Sum('num'), 
@@ -1020,7 +1020,7 @@ def index(request):
                                                                     (F('suma_num') * 100.0) / F('suma_den'),
                                                                     output_field=FloatField()
                                                                 )
-                                                            ).filter(Red=r_chyo).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                            ).filter(Red=r_chyo).order_by('Nombre_Establecimiento')
                                                             
     t_jauja = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                             suma_num=Sum('num'), 
@@ -1034,7 +1034,7 @@ def index(request):
                                                                     (F('suma_num') * 100.0) / F('suma_den'),
                                                                     output_field=FloatField()
                                                                 )
-                                                            ).filter(Red=r_jauja).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                            ).filter(Red=r_jauja).order_by('Nombre_Establecimiento')
 
     t_junin = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1048,7 +1048,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_junin).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_junin).order_by('Nombre_Establecimiento')
                                                         
     t_pki = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1062,7 +1062,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_pki).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_pki).order_by('Nombre_Establecimiento')
                                                         
     t_chupaca = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1076,7 +1076,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_chupaca).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_chupaca).order_by('Nombre_Establecimiento')
                                                         
     t_pangoa = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1090,7 +1090,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_pangoa).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_pangoa).order_by('Nombre_Establecimiento')
                                                          
     t_satipo = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1104,7 +1104,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_satipo).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_satipo).order_by('Nombre_Establecimiento')
                                                         
     t_tarma = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1118,7 +1118,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_tarma).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_tarma).order_by('Nombre_Establecimiento')
                                                         
     t_valle = RptVisita.objects.values('Codigo_Unico','Nombre_Establecimiento').annotate(
                                                         suma_num=Sum('num'), 
@@ -1132,7 +1132,7 @@ def index(request):
                                                                 (F('suma_num') * 100.0) / F('suma_den'),
                                                                 output_field=FloatField()
                                                             )
-                                                        ).filter(Red=r_valle).filter(mes=t_mes).order_by('Nombre_Establecimiento')
+                                                        ).filter(Red=r_valle).order_by('Nombre_Establecimiento')
     
 
     context = {
@@ -1157,7 +1157,6 @@ def index(request):
 @login_required
 def get_chart(_request):
     # Consulta para obtener los datos de ventas
-
     # Formatear los datos para pasarlos a la plantilla
     colors = ['#5470C6', '#91CC75', '#EE6666'];   
     
@@ -1226,7 +1225,82 @@ def get_chart(_request):
     
     return JsonResponse(chart)
 
+@login_required
+def get_chart_ranking(_request):
+    # Formatear los datos para pasarlos a la plantilla
+    # Obtener las puntuaciones ordenadas descendientemente
+    t_red = RptVisita.objects.values('Red').annotate(
+                                                        suma_num=Sum('num'), 
+                                                        suma_den=Sum('den')
+                                                        ).annotate(
+                                                            porcentaje=ExpressionWrapper(
+                                                                (F('suma_num') * 100.0) / F('suma_den'),
+                                                                output_field=FloatField()
+                                                            )
+                                                        ).order_by('porcentaje')
+                                                        
+    # Crear listas separadas para cada variable
+    redes = [item['Red'] for item in t_red]
+    suma_num = [item['suma_num'] for item in t_red]
+    suma_den = [item['suma_den'] for item in t_red]
+    porcentajes = [item['porcentaje'] for item in t_red]
 
+    colors = ['#5470C6', '#91CC75', '#EE6666'];   
+       
+    chart_ranking = {
+        'title': {
+            'text': 'RANKING POR REDES'
+        },
+        'tooltip':{
+            'show': True,
+            'trigger': "axis",
+            'triggerOn': "mousemove|click",
+            'axisPointer' : {
+                'type': 'shadow'
+            }
+        },
+        'legend':{# Nombre para la leyenda
+        },
+        'grid': {
+            'left': '3%',
+            'right': '4%',
+            'bottom': '3%',
+            'containLabel': 'true'
+        },       
+        'xAxis':[
+            {
+                'type':"value",
+                'boundaryGap':["0","0.01"]
+            }            
+        ],
+        'yAxis':[
+            {
+                'type':"category",
+                'data': redes,
+            }            
+        ],
+        'series':[
+            {
+                'name': 'Meta',
+                'data': suma_den,
+                'type': "bar",
+            }, 
+            {
+                'name': 'Avance',
+                'data': suma_num,
+                'type': "bar",
+            },
+            {
+                'name': 'Porcentaje',
+                'data': porcentajes,
+                'type': "line",
+            },             
+        ],
+        
+        
+    }
+    return JsonResponse(chart_ranking)
+    
 ################################################
 # REPORTE DE SEGUIMIENTO
 ################################################

@@ -1,7 +1,7 @@
 # miapp/urls.py
 from django.urls import path
 from .views import index, get_distritos, p_distritos, get_redes, get_provincias, get_microredes, p_microredes, p_microredes_principal
-from .views import get_establecimientos,p_establecimientos, get_chart
+from .views import get_establecimientos,p_establecimientos, get_chart, get_chart_ranking
 from .views import RptProvinciaVistaExcel, RptDistritoVistaExcel, RptRedVistaExcel, RptMicroredVistaExcel, RptEstablecimientoVistaExcel
 
 app_name = 'filiacion'
@@ -38,11 +38,10 @@ urlpatterns = [
     path('p_establecimiento/', p_establecimientos, name='p_establecimientos'),
     #-- establecimiento excel
     path('rpt_seg_visita_establecimiento/', RptEstablecimientoVistaExcel.as_view(), name = 'rpt_seg_visita_establecimiento'),
-    
-    
-    
+       
     # graficos
     path('get_chart/', get_chart, name='get_chart'),
+    path('get_chart_ranking/', get_chart_ranking, name='get_chart_ranking')
     
     # SEGUIMIENTO VISITAS 
     #path('rpt_seguimiento_visita_dis/', views.listar_rpt_seguimiento_visita_dis, name='rpt_seguimiento_visita_dis'),
