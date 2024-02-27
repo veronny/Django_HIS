@@ -8,7 +8,9 @@ from filiacion import views
 from django.conf.urls.static import static
 # Reporte excel
 from filiacion.views import home, ReportePersonalizadoExcel, RptVistaDisExcel, RptSeguimientoVistaDisExcel, RptDiscapacidad2
-# Formularios
+# App Padron
+from padron.views import index
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,8 +35,10 @@ urlpatterns = [
     path('rpt_operacional_dis/', RptDiscapacidad2.as_view(), name='rpt_operacional_dis'),
           
         
+    # PROMSA
+    path('', include('filiacion.urls')),
     # PADRON NOMINAL
-    path('', include('filiacion.urls'))
+    path('', include('padron.urls'))
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

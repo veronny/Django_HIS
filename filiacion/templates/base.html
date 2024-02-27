@@ -69,7 +69,7 @@
                 </a>
                 <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
                   <li class="w-100">
-                    <a href="#" class="nav-link px-0">
+                    <a href="{% url 'padron:padron_situacion' %}" class="nav-link px-0">
                       <span class="d-none d-sm-inline">SITUACION </span></a>
                   </li>
                   <li>
@@ -114,6 +114,7 @@
     <script src="{% static 'js/dataTables.bootstrap5.min.js' %}"></script>
     <!-- Custom JS -->
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/padron.js' %}"></script>
     <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@1.9.2/dist/htmx.js"></script>
     <!-- Apache ECharts -->

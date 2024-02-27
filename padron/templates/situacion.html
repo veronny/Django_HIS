@@ -1,0 +1,1057 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+
+<div class="col py-3">
+  <!-- CABECERAS INDICADOR -->
+  <div class="row">
+    <div class="display-1 text-center py-3 alert alert-secondary col-md-8" role="alert">
+      <h3>SITUACION DEL PADRON NOMINAL</h3>
+    </div>
+
+    <div class="display-1 text-center py-3 alert alert-primary col-md-4" role="alert">
+      <h3>TOTAL DE NIÑOS: 133 489</h3>  
+    </div>
+  </div>  
+  <!-- FIN DE CABECERA -->
+  
+  <div class="row">
+    <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9">
+      <section class="card card-body shadow mb-2">
+        <div id="chart_padron_edades" class="chart_padron_edades"></div>
+      </section>
+    </div> 
+    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+      <section class="card card-body shadow mb-2">
+        <div id="chart_padron_sexo" class="chart_padron_sexo"></div>
+      </section>
+    </div> 
+  </div>
+  
+  <!-- CABECERA AVANCE INDICADOR -->
+  <!-- FIN DE CABECERA -->
+  
+  <!-- GRAFICOS PRIMERA PARTE -->
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <section class="card card-body shadow mb-2">
+          <div id="chart_padron_dni" class="chart_padron_dni"></div>
+        </section>
+      </div> 
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <section class="card card-body shadow mb-2">
+              <div id="chart_padron_seguro" class="chart_padron_seguro"></div>
+            </section>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <section class="card card-body shadow mb-2">
+              <div id="chart_padron_encontrado" class="chart_padron_encontrado"></div>
+            </section>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <section class="card card-body shadow mb-2">
+          <div id="chart_padron_visitado" class="chart_padron_visitado"></div>
+        </section>
+      </div>
+    </div>
+  <!-- FIN DE GRAFICOS PRIMERA PARTE -->
+
+    <!-- GRAFICOS SEGUNDA PARTE -->
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <section class="card card-body shadow mb-2">
+          <div id="chart_padron_celular" class="chart_padron_celular"></div>
+        </section>
+      </div> 
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <section class="card card-body shadow mb-2">
+              <div id="chart_padron_frecuencia" class="chart_padron_frecuencia"></div>
+            </section>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <section class="card card-body shadow mb-2">
+              <div id="chart_padron_entidad" class="chart_padron_entidad"></div>
+            </section>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <section class="card card-body shadow mb-2">
+          <div id="chart_padron_atencion" class="chart_padron_atencion"></div>
+        </section>
+      </div>
+    </div>
+  <!-- FIN DE GRAFICOS SEGUNDA PARTE -->
+    <!-- TABLA DETALLADO -->
+    <div class="row">
+      <div class="col-md-12">
+        <section class="card card-body shadow mb-2">
+          <!-- link de tap -->
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link active" style="font-size: 13px;" id="chyo-tab" data-toggle="tab" href="#chyo" role="tab" aria-controls="chyo" aria-selected="true"><i class="bi bi-geo-alt-fill"></i> CHANCHAMAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="chupaca-tab" data-toggle="tab" href="#chupaca" role="tab" aria-controls="chupaca" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> CHUPACA</a>
+              </li>
+              <li class="nav-item">
+                    <a class="nav-link" style="font-size: 13px;" id="concepcion-tab" data-toggle="tab" href="#concepcion" role="tab" aria-controls="concepcion" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> CONCEPCION</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="huancayo-tab" data-toggle="tab" href="#huancayo" role="tab" aria-controls="huancayo" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> HUANCAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="jauja-tab" data-toggle="tab" href="#jauja" role="tab" aria-controls="jauja" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> JAUJA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="junin-tab" data-toggle="tab" href="#junin" role="tab" aria-controls="junin" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> JUNIN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="satipo-tab" data-toggle="tab" href="#satipo" role="tab" aria-controls="satipo" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> SATIPO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="tarma-tab" data-toggle="tab" href="#tarma" role="tab" aria-controls="tarma" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> TARMA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="yauli-tab" data-toggle="tab" href="#yauli" role="tab" aria-controls="yauli" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> YAULI</a>
+              </li>               
+          </ul>
+          <!-- fin link de tap -->
+          <div class="tab-content" id="myTabContent">
+            <!-- contenido de tap -->
+                <div class="tab-pane fade show active" id="chyo" role="tabpanel" aria-labelledby="chyo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_chyo %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHANCHAMAYO -->
+                </div>
+                <div class="tab-pane fade" id="chupaca" role="tabpanel" aria-labelledby="chupaca-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_chupaca %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHUPACA -->
+                </div>
+                <div class="tab-pane fade" id="concepcion" role="tabpanel" aria-labelledby="concepcion-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_concepcion %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para JUNIN -->
+                </div>
+                <div class="tab-pane fade" id="huancayo" role="tabpanel" aria-labelledby="huancayo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_huancayo %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para PICHANAKI -->
+                </div>
+                <div class="tab-pane fade" id="jauja" role="tabpanel" aria-labelledby="jauja-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_jauja %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHUPACA -->
+                </div>
+                <div class="tab-pane fade" id="junin" role="tabpanel" aria-labelledby="junin-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_junin %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para PANGOA -->
+                </div>
+                <div class="tab-pane fade" id="satipo" role="tabpanel" aria-labelledby="satipo-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_satipo%}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para SATIPO -->
+                </div>
+                <div class="tab-pane fade" id="tarma" role="tabpanel" aria-labelledby="tarma-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_tarma %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para TARMA -->
+                </div>
+                <div class="tab-pane fade" id="yauli" role="tabpanel" aria-labelledby="yauli-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_red_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                            <th style="text-align:center;font-size: 13px;">DISTRITO</th>
+                            <th style="text-align:center;font-size: 13px;">0-28d</th>
+                            <th style="text-align:center;font-size: 13px;">0-5m</th>
+                            <th style="text-align:center;font-size: 13px;">6-11m</th>
+                            <th style="text-align:center;font-size: 13px;">> 1a</th>
+                            <th style="text-align:center;font-size: 13px;">1a</th>
+                            <th style="text-align:center;font-size: 13px;">2a</th>
+                            <th style="text-align:center;font-size: 13px;">3a</th>
+                            <th style="text-align:center;font-size: 13px;">4a</th>
+                            <th style="text-align:center;font-size: 13px;">5a</th>
+                            <th style="text-align:center;font-size: 13px;">Sin DNI</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Seguro</th>
+                            <th style="text-align:center;font-size: 13px;">No Encont</th>
+                            <th style="text-align:center;font-size: 13px;">No Visitado</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Celular</th>
+                            <th style="text-align:center;font-size: 13px;">Sin Fecuencia</th>
+                            <th style="text-align:center;font-size: 13px;">Entidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in t_yauli %}
+                            <tr>
+                                <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_28d }}</td>
+                                <td style="text-align:center;">{{ i.sum_0_5m }}</td>
+                                <td style="text-align:center;">{{ i.sum_6_11m }}</td>                                
+                                <td style="text-align:center;">{{ i.sum_12m }}</td>
+                                <td style="text-align:center;">{{ i.sum_1a }}</td>
+                                <td style="text-align:center;">{{ i.sum_2a }}</td>
+                                <td style="text-align:center;">{{ i.sum_3a }}</td>
+                                <td style="text-align:center;">{{ i.sum_4a }}</td>
+                                <td style="text-align:center;">{{ i.sum_5a }}</td>
+                                
+                                {% if i.sum_num >= 0 and i.sum_num < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num }}</td>
+                                {% elif i.sum_num >= 30 and  i.sum_num < 10 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num }}</td>
+                                {% endif %}
+                                
+                                {% if i.sum_seguro >= 0 and i.sum_seguro < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_seguro }}</td>
+                                {% elif i.sum_seguro >= 30 and  i.sum_seguro < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_seguro }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_seguro }}</td>
+                                {% endif %}
+
+                                {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                                {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                                {% endif %}
+
+                                {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                                {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                                {% endif %}
+
+                                {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                                {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                                {% endif %}
+
+                                {% if i.sum_frecuencia >= 0 and i.sum_frecuencia < 30 %}
+                                <td style="text-align:center;color:green">{{ i.sum_frecuencia }}</td>
+                                {% elif i.sum_frecuencia >= 30 and  i.sum_frecuencia < 100 %}
+                                <td style="text-align:center;color:orange">{{ i.sum_frecuencia }}</td>
+                                {% else %}
+                                <td style="text-align:center;color:red">{{ i.sum_frecuencia }}</td>
+                                {% endif %}
+
+                                {% if i.sum_entidad >= 0 and i.sum_entidad < 30 %}
+                                <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.sum_entidad }}</td>
+                                {% elif i.sum_entidad >= 30 and  i.sum_entidad < 100 %}
+                                <td style="text-align:center;background-color:#F5B041;color:white">{{ i.sum_entidad }}</td>
+                                {% else %}
+                                <td style="text-align:center;background-color:#EC7063;color:white">{{ i.sum_entidad }}</td>
+                                {% endif %}
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para YAULI -->
+                </div>
+            <!-- fin contenido de tap -->   
+          </div>
+        </section>
+      </div>  
+    </div>
+  <!-- FIN DE TABLA -->
+  
+  
+   <!-- CABECERA SEGUIMIENTO-->
+  <div class="display-1 text-center py-3 alert alert-warning" role="alert">
+    <h4><i class="fa fa-running"></i> SEGUIMIENTO NOMINAL</h4>
+  </div>
+  <!-- FIN DE CABECERA -->
+  <!-- SEGUIMIENTO -->
+  <div class="row">
+    <div class="col-md-3">
+      <section class="card card-body shadow mb-2">
+        <div hx-target="#content" hx-swap="innerHTML" hx-indicator="#loading">
+          <ul class="list-group">
+              <a href="#" class="list-group-item list-group-item-action active">TIPO DE REPORTE</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_provincias' 1 %}" hx-swap="innerHTML" hx-trigger="click">PROVINCIA</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_distritos' 1 %}" hx-swap="innerHTML" hx-trigger="click">DISTRITO</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_redes' 1 %}" hx-swap="innerHTML" hx-trigger="click">RED</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_microredes' 1 %}" hx-swap="innerHTML" hx-trigger="click">MICRORED</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_establecimientos' 1 %}" hx-swap="innerHTML" hx-trigger="click">ESTABLECIMIENTO</a>
+              <!-- <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">DNI</a> -->
+          </ul>
+        </div>
+      </section>
+  </div>
+  
+  <div class="col-md-9"> 
+      <div id="loading" style="display:none;">Cargando...
+        <section class = "card card-body shadow mb-2">
+        </section>
+      </div>
+      <div id="content">
+        <section class = "card card-body shadow mb-2">
+        </section>
+      </div>
+    </div>
+  </div>
+   <!-- FIN DE SEGUIMIENTO ----------->  
+</div>
+{% endif %}
+{% endblock %}

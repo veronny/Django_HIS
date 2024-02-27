@@ -29,6 +29,7 @@ from random import randrange
 # tablas por redes
 from django.db.models import Sum, F, FloatField, ExpressionWrapper
 from django.db.models.functions import Cast, Round
+
 # ht-get por distrito
 from django.urls import reverse
 import json
