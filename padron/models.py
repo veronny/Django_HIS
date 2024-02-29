@@ -69,6 +69,9 @@ class Padron(models.Model):
     Codigo_Unico = models.CharField(max_length=50,null=True, blank=True)
     Nombre_Establecimiento = models.CharField(max_length=250,null=True, blank=True)
     Numero_Documento_Personal = models.CharField(max_length=50,null=True, blank=True)
+    Apellido_Paterno_Personal = models.CharField(max_length=50,null=True, blank=True)
+    Apellido_Materno_Personal = models.CharField(max_length=50,null=True, blank=True)
+    Nombres_Personal = models.CharField(max_length=50,null=True, blank=True)
 
     def __str__(self):
         return self.num_doc

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import RptProvinciaPadron, get_provincias_padron
 
 app_name = 'padron'
 
@@ -25,5 +26,11 @@ urlpatterns = [
     # graficos sin ENTIDAD
     path('padron_situacion/get_chart_padron_entidad/', views.get_chart_padron_entidad, name='get_chart_padron_emtidad'),
     # graficos sin HIS MINSA
-    path('padron_situacion/get_chart_padron_atencion/', views.get_chart_padron_atencion, name='get_chart_padron_atencion'),
+    path('padron_situacion/get_chart_padron_atencion/', views.get_chart_padron_atencion, name='get_chart_padron_atencion'),     #-- provincia excel
+    
+    
+    # Padron provincia
+    path('padron_situacion/get_provincias_padron/<int:provincias_id>/', get_provincias_padron, name='get_provincias_padron'),
+    # Padron provincia excel
+    path('rpt_provincia_padron/', RptProvinciaPadron.as_view() , name = 'rpt_prov_padron_xls'),
 ]

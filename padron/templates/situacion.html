@@ -1026,14 +1026,11 @@
   <div class="row">
     <div class="col-md-3">
       <section class="card card-body shadow mb-2">
-        <div hx-target="#content" hx-swap="innerHTML" hx-indicator="#loading">
+        <div hx-target="#content_1" hx-swap="innerHTML" hx-indicator="#loading_1">
           <ul class="list-group">
               <a href="#" class="list-group-item list-group-item-action active">TIPO DE REPORTE</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_provincias' 1 %}" hx-swap="innerHTML" hx-trigger="click">PROVINCIA</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'padron:get_provincias_padron' 1 %}" hx-swap="innerHTML" hx-trigger="click">PROVINCIA</a>
               <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_distritos' 1 %}" hx-swap="innerHTML" hx-trigger="click">DISTRITO</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_redes' 1 %}" hx-swap="innerHTML" hx-trigger="click">RED</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_microredes' 1 %}" hx-swap="innerHTML" hx-trigger="click">MICRORED</a>
-              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'filiacion:get_establecimientos' 1 %}" hx-swap="innerHTML" hx-trigger="click">ESTABLECIMIENTO</a>
               <!-- <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">DNI</a> -->
           </ul>
         </div>
@@ -1041,11 +1038,11 @@
   </div>
   
   <div class="col-md-9"> 
-      <div id="loading" style="display:none;">Cargando...
+      <div id="loading_1" style="display:none;">Cargando...
         <section class = "card card-body shadow mb-2">
         </section>
       </div>
-      <div id="content">
+      <div id="content_1">
         <section class = "card card-body shadow mb-2">
         </section>
       </div>
