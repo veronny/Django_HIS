@@ -57,8 +57,7 @@
                             <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR CANCER</a></li>
                             <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">TRAZADOR SALUD MENTAL</a></li>
                           </ul>
-                      </li>
-                        
+                      </li>   
                     </ul>
                     <!-- Fin Sub Menu -->
               </li>
@@ -73,20 +72,26 @@
                       <span class="d-none d-sm-inline">SITUACION </span></a>
                   </li>
                   <li>
+                    <a href="{% url 'padron:actas_homologacion' %}" class="nav-link px-0">
+                      <span class="d-none d-sm-inline">ACTAS HOMOLOGACION</span></a>
+                  </li>
+                  <li class="w-100">
+                    <a href="#m_compromiso" data-bs-toggle="collapse" class="nav-link px-0 siderbar-link" style="display: flex;align-items: center;" role="button" aria-expanded="false" aria-controls="m_compromiso">
+                      <span class="me-2"><i class="bi bi-chevron-right"></i></span>
+                      <span>COMPROMISO 1</span></a>
+
+                      <ul class="collapse nav flex-column ms-1 text-white" id="m_compromiso" data-bs-parent="#m_compromiso">
+                        <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="{% url 'padron:compromiso' %}">INDICADOR 1.1</a></li>
+                        <li><a class="nav-link align-middle text-muted fw-bold text-uppercase px-2" href="#">INDICADOR 1.2</a></li>
+                      </ul>
+                  </li>
+                  <li>
+                    <a href="#" class="nav-link px-0">
+                      <span class="d-none d-sm-inline">DIRECTORIO </span></a>
+                  </li>
+                  <li>
                     <a href="#" class="nav-link px-0">
                       <span class="d-none d-sm-inline">SELLO MUNICIPAL</span></a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-0">
-                      <span class="d-none d-sm-inline">DIRECTORIO MUNICIPIO</span></a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-0">
-                      <span class="d-none d-sm-inline">DIRECTORIO ESTABLECIMIENTO</span></a>
-                  </li>
-                  <li>
-                    <a href="#" class="nav-link px-0">
-                      <span class="d-none d-sm-inline">COMPROMISO 1</span></a>
                   </li>
                 </ul>
               </li>
@@ -582,6 +587,249 @@
         },
       });
     </script>
+
+    <!-- Tabla  CHANCHAMAYO-->
+    <script type="text/javascript">
+      $('#table_chyo').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  CHUPACA-->
+    <script type="text/javascript">
+      $('#table_chupaca').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  CONCEPCION-->
+    <script type="text/javascript">
+      $('#table_concepcion').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  HUANCAYO-->
+    <script type="text/javascript">
+      $('#table_huancayo').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  JAUJA-->
+    <script type="text/javascript">
+      $('#table_jauja').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  JUNIN-->
+    <script type="text/javascript">
+      $('#table_junin').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  SATIPO-->
+    <script type="text/javascript">
+      $('#table_satipo').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>       
+
+    <!-- Tabla  TARMA-->
+    <script type="text/javascript">
+      $('#table_tarma').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
+
+    <!-- Tabla  YAULI-->
+    <script type="text/javascript">
+      $('#table_yauli').DataTable({
+        "pageLength": 50,
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+        },
+      });
+    </script>   
 
     {% block js %}
     {% endblock%}

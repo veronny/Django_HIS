@@ -3,9 +3,9 @@ from import_export.admin import ImportExportModelAdmin
 
 from django.contrib import admin
 
-from .models import Padron
+from .models import Padron, Compromiso
 ###################################################### 
-#----  RED  -------------
+#----  PADRON  -------------
 class PadronResources(resources.ModelResource):
     class Meta:
         model = Padron
@@ -69,3 +69,58 @@ class PadronAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 
 ###################################################### 
 # Register your models here.
+###################################################### 
+#----  PADRON  -------------
+class CompromisoResources(resources.ModelResource):
+    class Meta:
+        model = Compromiso
+
+@admin.register(Compromiso)
+class CompromisoAdmin(ImportExportModelAdmin,admin.ModelAdmin):
+    resource_class = CompromisoResources
+    list_display = (                                                          
+                    'ubigeo',  
+                    'cnv',
+                    'cui',
+                    'dni',
+                    'num_doc',
+                    'fecha_nac',
+                    'seguro',
+                    'ap_paterno',
+                    'ap_materno',
+                    'nom_nino',
+                    'direccion',
+                    'eje',
+                    'referencia',
+                    'provincia',
+                    'distrito',
+                    'area',
+                    'visitado',
+                    'fe_visita',
+                    'cod_eess_padron',
+                    'nom_eess_padron',
+                    'frecuencia',
+                    'encontrado',
+                    'dni_mama',
+                    'num_cel',
+                    'pn_reg',
+                    'edad_mes',
+                    'den',
+                    'num_num_doc',
+                    'num_eje',
+                    'num_ref',
+                    'num_vis',
+                    'num_enc',
+                    'seguro',
+                    'num_nom_eess_padron',
+                    'num_num_cel',
+                    'frecuencia',
+                    'num_entidad_eess',
+                    'num_entidad_muni',
+                    'num_entidad_reniec',
+                    )
+    search_fields = ('ubigeo','cnv','cui','dni','num_doc','fecha_nac','seguro','ap_paterno','ap_materno','nom_nino','direccion','eje','referencia','provincia','distrito','area',
+                    'visitado','fe_visita','cod_eess_padron','nom_eess_padron','frecuencia','encontrado','dni_mama','num_cel','pn_reg','edad_mes','den','num_num_doc','num_eje','num_ref','num_vis','num_enc','seguro','num_nom_eess_padron','num_num_cel','frecuencia','num_entidad_eess','num_entidad_muni',
+                    'num_entidad_reniec',)  
+
+###################################################### 

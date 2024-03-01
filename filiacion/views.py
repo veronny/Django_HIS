@@ -2004,7 +2004,6 @@ class RptDistritoVistaExcel(TemplateView):
         nombre_mes_inicio = meses[fecha_inicio - 1]
         nombre_mes_fin = meses[fecha_inicio - 1]      
 
-        print(query)
         # creacion de archivo
         wb = Workbook() #crea libro de trabajo
         ws = wb.active #Primera hoja

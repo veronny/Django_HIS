@@ -1,0 +1,633 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+
+<div class="col py-3">
+  <!-- CABECERAS INDICADOR -->
+  <div class="row">
+    <div class="display-1 text-center py-3 alert alert-secondary col-md-12" role="alert">
+      <h3>1.1 NIÑOS HASTA 12 MESES DE EDAD QUE RECIBEN VISITAS DOMICILARIAS OPORTUNAS Y CONSECUTIVAS</h3>
+    </div>
+  </div>  
+  <!-- FIN DE CABECERA -->
+    
+  <!-- GRAFICOS PRIMERA PARTE -->
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <section class="card card-body shadow mb-2">
+          <div id="chart_padron_dni" class="chart_padron_dni"></div>
+        </section>
+      </div> 
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <section class="card card-body shadow mb-2">
+              <div id="chart_padron_seguro" class="chart_padron_seguro"></div>
+            </section>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+            <section class="card card-body shadow mb-2">
+              <div id="chart_padron_encontrado" class="chart_padron_encontrado"></div>
+            </section>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3">
+        <section class="card card-body shadow mb-2">
+          <div id="chart_padron_visitado" class="chart_padron_visitado"></div>
+        </section>
+      </div>
+    </div>
+  <!-- FIN DE GRAFICOS PRIMERA PARTE -->
+
+  <!-- FIN DE GRAFICOS SEGUNDA PARTE -->
+    <!-- TABLA DETALLADO -->
+    <div class="row">
+      <div class="col-md-12">
+        <section class="card card-body shadow mb-2">
+          <!-- link de tap -->
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link active" style="font-size: 13px;" id="chyo-tab" data-toggle="tab" href="#chyo" role="tab" aria-controls="chyo" aria-selected="true"><i class="bi bi-geo-alt-fill"></i> CHANCHAMAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="chupaca-tab" data-toggle="tab" href="#chupaca" role="tab" aria-controls="chupaca" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> CHUPACA</a>
+              </li>
+              <li class="nav-item">
+                    <a class="nav-link" style="font-size: 13px;" id="concepcion-tab" data-toggle="tab" href="#concepcion" role="tab" aria-controls="concepcion" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> CONCEPCION</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="huancayo-tab" data-toggle="tab" href="#huancayo" role="tab" aria-controls="huancayo" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> HUANCAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="jauja-tab" data-toggle="tab" href="#jauja" role="tab" aria-controls="jauja" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> JAUJA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="junin-tab" data-toggle="tab" href="#junin" role="tab" aria-controls="junin" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> JUNIN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="satipo-tab" data-toggle="tab" href="#satipo" role="tab" aria-controls="satipo" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> SATIPO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="tarma-tab" data-toggle="tab" href="#tarma" role="tab" aria-controls="tarma" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> TARMA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="yauli-tab" data-toggle="tab" href="#yauli" role="tab" aria-controls="yauli" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> YAULI</a>
+              </li>               
+          </ul>
+          <!-- fin link de tap -->
+          <div class="tab-content" id="myTabContent">
+            <!-- contenido de tap -->
+                <div class="tab-pane fade show active" id="chyo" role="tabpanel" aria-labelledby="chyo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_chyo %}
+                        <tr>
+                          <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;">{{ i.sum_den }}</td>
+                          <td style="text-align:center;">{{ i.sum_num }}</td>
+                       
+                          {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                            <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                            {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                            <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                            {% else %}
+                            <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% endif %}
+
+                          {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                          <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                          {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                          <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                          {% else %}
+                          <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                          {% endif %}
+
+                          {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                          <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                          {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                          <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                          {% else %}
+                          <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                          {% endif %}
+
+                          {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                          <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                          {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                          <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                          {% else %}
+                          <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                          {% endif %}
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHANCHAMAYO -->
+                </div>
+                <div class="tab-pane fade" id="chupaca" role="tabpanel" aria-labelledby="chupaca-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_chupaca" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_chupaca %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHUPACA -->
+                </div>
+                <div class="tab-pane fade" id="concepcion" role="tabpanel" aria-labelledby="concepcion-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_concepcion" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_concepcion %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}    
+                    </tbody>
+                  </table><!-- Tabla para JUNIN -->
+                </div>
+                <div class="tab-pane fade" id="huancayo" role="tabpanel" aria-labelledby="huancayo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_huancayo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_huancayo %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para HUANCAYO -->
+                </div>
+                <div class="tab-pane fade" id="jauja" role="tabpanel" aria-labelledby="jauja-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_jauja" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_jauja %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para JAUJA -->
+                </div>
+                <div class="tab-pane fade" id="junin" role="tabpanel" aria-labelledby="junin-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_junin" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_junin %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para JUNIN -->
+                </div>
+                <div class="tab-pane fade" id="satipo" role="tabpanel" aria-labelledby="satipo-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_satipo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_satipo %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para SATIPO -->
+                </div>
+                <div class="tab-pane fade" id="tarma" role="tabpanel" aria-labelledby="tarma-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_tarma" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_tarma %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para TARMA -->
+                </div>
+                <div class="tab-pane fade" id="yauli" role="tabpanel" aria-labelledby="yauli-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_yauli" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">NUM</th>
+                          <th style="text-align:center;font-size: 12px;">DEN</th>
+                          <th style="text-align:center;font-size: 12px;">POR (%)</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA VISITA</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA ENCONTRADO</th>
+                          <th style="text-align:center;font-size: 12px;">BRECHA CELULAR MADRE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_yauli %}
+                      <tr>
+                        <td style="text-align:left;color:#21618C">{{ i.distrito }}</td>
+                        <td style="text-align:center;">{{ i.sum_den }}</td>
+                        <td style="text-align:center;">{{ i.sum_num }}</td>
+                     
+                        {% if i.porcentaje >= 0 and i.porcentaje < 50 %}
+                          <td style="text-align:center;background-color:#EC7063;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% elif i.porcentaje >= 50 and  i.porcentaje < 85 %}
+                          <td style="text-align:center;background-color:#F5B041;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                          {% else %}
+                          <td style="text-align:center;background-color:#82E0AA;color:white">{{ i.porcentaje|floatformat:"2" }}</td>
+                        {% endif %}
+
+                        {% if i.sum_vis >= 0 and i.sum_vis < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_vis }}</td>
+                        {% elif i.sum_vis >= 30 and  i.sum_vis < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_vis }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_vis }}</td>
+                        {% endif %}
+
+                        {% if i.sum_enc >= 0 and i.sum_enc < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_enc }}</td>
+                        {% elif i.sum_enc >= 30 and  i.sum_enc < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_enc }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_enc }}</td>
+                        {% endif %}
+
+                        {% if i.sum_num_cel >= 0 and i.sum_num_cel < 30 %}
+                        <td style="text-align:center;color:green">{{ i.sum_num_cel }}</td>
+                        {% elif i.sum_num_cel >= 30 and  i.sum_num_cel < 100 %}
+                        <td style="text-align:center;color:orange">{{ i.sum_num_cel }}</td>
+                        {% else %}
+                        <td style="text-align:center;color:red">{{ i.sum_num_cel }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para YAULI -->
+                </div>
+            <!-- fin contenido de tap -->   
+          </div>
+        </section>
+      </div>  
+    </div>
+  <!-- FIN DE TABLA -->
+  
+  
+   <!-- CABECERA SEGUIMIENTO-->
+  <div class="display-1 text-center py-3 alert alert-warning" role="alert">
+    <h4><i class="fa fa-running"></i> SEGUIMIENTO NOMINAL</h4>
+  </div>
+  <!-- FIN DE CABECERA -->
+  <!-- SEGUIMIENTO -->
+  <div class="row">
+    <div class="col-md-3">
+      <section class="card card-body shadow mb-2">
+        <div hx-target="#content_1" hx-swap="innerHTML" hx-indicator="#loading_1">
+          <ul class="list-group">
+              <a href="#" class="list-group-item list-group-item-action active">TIPO DE REPORTE</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'padron:get_provincias_padron' 1 %}" hx-swap="innerHTML" hx-trigger="click">PROVINCIA</a>
+              <a href="#" class="list-group-item list-group-item-action" hx-get="{% url 'padron:get_distritos_padron' 1 %}" hx-swap="innerHTML" hx-trigger="click">DISTRITO</a>
+              <!-- <a href="#" class="list-group-item list-group-item-action" hx-trigger="click">DNI</a> -->
+          </ul>
+        </div>
+      </section>
+  </div>
+  
+  <div class="col-md-9"> 
+      <div id="loading_1" style="display:none;">Cargando...
+        <section class = "card card-body shadow mb-2">
+        </section>
+      </div>
+      <div id="content_1">
+        <section class = "card card-body shadow mb-2">
+        </section>
+      </div>
+    </div>
+  </div>
+   <!-- FIN DE SEGUIMIENTO ----------->  
+</div>
+{% endif %}
+{% endblock %}

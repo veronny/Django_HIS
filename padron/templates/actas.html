@@ -1,0 +1,501 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+{% if user.is_authenticated %}
+
+<div class="col py-3">
+  <!-- CABECERAS INDICADOR -->
+  <div class="row">
+    <div class="display-1 text-center py-3 alert alert-secondary col-md-12" role="alert">
+      <h3>REPORTE DE NUMERO DE ACTAS DE HOMOLOGACION RESGITRADAS OPORTUNAMENTE</h3>
+    </div>
+  </div>  
+  <!-- FIN DE CABECERA -->
+  
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <section class="card card-body shadow mb-2">
+        <img class="img-fluid rounded mb-4 mb-lg-0 text-center" style="width: 1500px; height: auto;" src="{% static 'img/actas_homologacion.png' %}" alt="..."/>
+      </section>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <section class="card card-body shadow mb-2">
+        <table class="table table-bordered" style="font-size: 12px;">
+          <thead>
+              <tr style="background-color: #FAF4F3;">
+                <th style="text-align:center;font-size: 12px;">MES DE MEDICION</th>
+                <th style="text-align:center;font-size: 12px;">REGISTRO OPORTUNO</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>ENERO</td>
+              <td>DESDE 2 DE ENERO HASTA <u>7 DE FEBRERO</u> DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>FEBRERO</td>
+              <td>DESDE 29 DE FEBRERO HASTA <u>7 DE MARZO</u> DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>MARZO</td>
+              <td>DESDE 31 DE MARZO HASTA 7 DE ABRIL DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>ABRIL</td>
+              <td>DESDE 30 DE ABRIL HASTA 7 DE MAYO DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>MAYO</td>
+              <td>DESDE 31 DE MAYO HASTA 7 DE JUNIO DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>JUNIO</td>
+              <td>DESDE 30 DE JUNIO HASTA 7 DE JULIO DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>JULIO</td>
+              <td>DESDE 31 DE JULIO HASTA 7 DE AGOSTO DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>AGOSTO</td>
+              <td>DESDE 31 DE AGOSTO HASTA 7 DE SETIEMBRE DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>SETIEMBRE</td>
+              <td>DESDE 30 DE SETIEMBRE HASTA 7 DE OCTUBRE DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>OCTUBRE</td>
+              <td>DESDE 31 DE OCTUBRE HASTA 7 DE NOVIEMBRE DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>NOVIEMBRE</td>
+              <td>DESDE 30 DE NOVIEMBRE HASTA 7 DE DICIEMBRE DEL 2024</td>
+            </tr>
+            <tr style="text-align:center;font-size: 12px;">
+              <td>DICIEMBRE</td>
+              <td>DESDE 31 DE DICIEMBRE HASTA 7 DE ENERO DEL 2025</td>
+            </tr>
+          </tbody>
+        </table><!-- Tabla para CHANCHAMAYO -->
+      </section>
+    </div> 
+  </div>
+  
+
+    <!-- TABLA DETALLADO -->
+  <div class="row">
+      <div class="col-md-12">
+        <section class="card card-body shadow mb-2">
+          <!-- link de tap -->
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                  <a class="nav-link active" style="font-size: 13px;" id="chyo-tab" data-toggle="tab" href="#chyo" role="tab" aria-controls="chyo" aria-selected="true"><i class="bi bi-geo-alt-fill"></i> CHANCHAMAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="chupaca-tab" data-toggle="tab" href="#chupaca" role="tab" aria-controls="chupaca" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> CHUPACA</a>
+              </li>
+              <li class="nav-item">
+                    <a class="nav-link" style="font-size: 13px;" id="concepcion-tab" data-toggle="tab" href="#concepcion" role="tab" aria-controls="concepcion" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> CONCEPCION</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="huancayo-tab" data-toggle="tab" href="#huancayo" role="tab" aria-controls="huancayo" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> HUANCAYO</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" style="font-size: 13px;" id="jauja-tab" data-toggle="tab" href="#jauja" role="tab" aria-controls="jauja" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> JAUJA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="junin-tab" data-toggle="tab" href="#junin" role="tab" aria-controls="junin" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> JUNIN</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="satipo-tab" data-toggle="tab" href="#satipo" role="tab" aria-controls="satipo" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> SATIPO</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="tarma-tab" data-toggle="tab" href="#tarma" role="tab" aria-controls="tarma" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> TARMA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" style="font-size: 13px;" id="yauli-tab" data-toggle="tab" href="#yauli" role="tab" aria-controls="yauli" aria-selected="false"><i class="bi bi-geo-alt-fill"></i> YAULI</a>
+              </li>               
+          </ul>
+          <!-- fin link de tap -->
+          <div class="tab-content" id="myTabContent">
+            <!-- contenido de tap -->
+                <div class="tab-pane fade show active" id="chyo" role="tabpanel" aria-labelledby="chyo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_chyo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_chyo %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table><!-- Tabla para CHANCHAMAYO -->
+                </div>
+                <div class="tab-pane fade" id="chupaca" role="tabpanel" aria-labelledby="chupaca-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_chupaca" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_chupaca %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para CHUPACA -->
+                </div>
+                <div class="tab-pane fade" id="concepcion" role="tabpanel" aria-labelledby="concepcion-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_concepcion" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_concepcion %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para JUNIN -->
+                </div>
+                <div class="tab-pane fade" id="huancayo" role="tabpanel" aria-labelledby="huancayo-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_huancayo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_huancayo %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para HUANCAYO -->
+                </div>
+                <div class="tab-pane fade" id="jauja" role="tabpanel" aria-labelledby="jauja-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_jauja" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_jauja %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para JAUJA -->
+                </div>
+                <div class="tab-pane fade" id="junin" role="tabpanel" aria-labelledby="junin-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_junin" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_junin %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>  
+                  </table><!-- Tabla para JUNIN -->
+                </div>
+                <div class="tab-pane fade" id="satipo" role="tabpanel" aria-labelledby="satipo-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_satipo" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_satipo %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para SATIPO -->
+                </div>
+                <div class="tab-pane fade" id="tarma" role="tabpanel" aria-labelledby="tarma-tab">
+                  </br>  
+                  <table class="table table-bordered" id="table_tarma" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_tarma %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para TARMA -->
+                </div>
+                <div class="tab-pane fade" id="yauli" role="tabpanel" aria-labelledby="yauli-tab">
+                  </br>
+                  <table class="table table-bordered" id="table_yauli" style="font-size: 14px;">
+                    <thead>
+                        <tr style="background-color: #FAF4F3;">
+                          <th style="text-align:center;font-size: 12px;">DISTRITO</th>
+                          <th style="text-align:center;font-size: 12px;">ENE</th>
+                          <th style="text-align:center;font-size: 12px;">FEB</th>
+                          <th style="text-align:center;font-size: 12px;">MAR</th>
+                          <th style="text-align:center;font-size: 12px;">ABR</th>
+                          <th style="text-align:center;font-size: 12px;">MAY</th>
+                          <th style="text-align:center;font-size: 12px;">JUN</th>
+                          <th style="text-align:center;font-size: 12px;">JUL</th>
+                          <th style="text-align:center;font-size: 12px;">AGO</th>
+                          <th style="text-align:center;font-size: 12px;">SET</th>
+                          <th style="text-align:center;font-size: 12px;">OCT</th>
+                          <th style="text-align:center;font-size: 12px;">NOV</th>
+                          <th style="text-align:center;font-size: 12px;">DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for i in t_yauli %}
+                      <tr>
+                          <td style="text-align:center;color:#21618C">{{ i.distrito }}</td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                          <td style="text-align:center;color:#21618C"></td>
+                      </tr>
+                      {% endfor %} 
+                    </tbody>
+                  </table><!-- Tabla para YAULI -->
+                </div>
+            <!-- fin contenido de tap -->   
+          </div>
+        </section>
+      </div>  
+  </div>
+  <!-- FIN DE TABLA -->
+   <!-- FIN DE SEGUIMIENTO ----------->  
+</div>
+{% endif %}
+{% endblock %}

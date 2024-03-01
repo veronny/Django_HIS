@@ -1,0 +1,9 @@
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@1.9.2/dist/htmx.js"></script>
+
+<label class="text-primary" for="p_establecimiento">Establecimiento : </label>
+    <select class="form-control custom-select" name="p_establecimiento" hx-get="{% url 'filiacion:rpt_seg_visita_distrito' %}" hx-trigger="change">
+        {% for e in establecimientos %}
+        <option value="{{ e.codigo_unico }}">{{ e.nombre_establecimiento }}</option>
+        {% endfor %}
+    </select>

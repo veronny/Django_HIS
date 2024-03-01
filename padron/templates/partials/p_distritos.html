@@ -1,0 +1,9 @@
+<!-- HTMX -->
+<script src="https://unpkg.com/htmx.org@1.9.2/dist/htmx.js"></script>
+
+<label class="text-primary">Distrito</label>
+    <select class="form-control custom-select" name="distritos" hx-get="{% url 'filiacion:rpt_seg_visita_distrito' %}" hx-trigger="change" hx-target="#resultado">
+        {% for d in distritos %}
+        <option value="{{ d.ubigeo_dis }}">{{ d.nombre_distrito }}</option>
+        {% endfor %}
+    </select>
