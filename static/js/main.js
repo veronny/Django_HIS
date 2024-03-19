@@ -1,6 +1,6 @@
 const getOptionChart = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/get_chart/");
+        const response = await fetch("http://15.228.149.221/get_chart/");
         return await response.json();
     } catch (ex) {
         alert(ex.message);
@@ -9,7 +9,7 @@ const getOptionChart = async () => {
 
 const getOptionChartRanking = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/get_chart_ranking/");
+        const response = await fetch("http://15.228.149.221/get_chart_ranking/");
         return await response.json();
     } catch (ex) {
         alert(ex.message);

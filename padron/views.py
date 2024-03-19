@@ -1329,7 +1329,7 @@ class RptProvinciaPadron(TemplateView):
 
             if q.fecha_nac is not None:
                 # Convert the string to a datetime object
-                cr_date = datetime.strptime(q.fecha_nac, '%Y-%m-%d %H:%M:%S')
+                cr_date = datetime.strptime(q.fecha_nac, '%Y-%m-%d')
                 # Format the datetime object as 'mm/dd/yyyy'
                 fecha_nac_formateada = cr_date.strftime('%m/%d/%Y')
             else:
@@ -1337,7 +1337,7 @@ class RptProvinciaPadron(TemplateView):
 
             
             if q.his_atencion is not None:
-                his_date = datetime.strptime(q.his_atencion, '%Y-%m-%d %H:%M:%S')
+                his_date = datetime.strptime(q.his_atencion, '%Y-%m-%d')
                 his_ate_formateado = his_date.strftime('%m/%d/%Y')
             else:
                 his_ate_formateado = ''
@@ -2193,7 +2193,7 @@ class RptDistritoPadron(TemplateView):
 
             if q.fecha_nac is not None:
                 # Convert the string to a datetime object
-                cr_date = datetime.strptime(q.fecha_nac, '%Y-%m-%d %H:%M:%S')
+                cr_date = datetime.strptime(q.fecha_nac, '%Y-%m-%d')
                 # Format the datetime object as 'mm/dd/yyyy'
                 fecha_nac_formateada = cr_date.strftime('%m/%d/%Y')
             else:
@@ -2201,7 +2201,7 @@ class RptDistritoPadron(TemplateView):
 
             
             if q.his_atencion is not None:
-                his_date = datetime.strptime(q.his_atencion, '%Y-%m-%d %H:%M:%S')
+                his_date = datetime.strptime(q.his_atencion, '%Y-%m-%d')
                 his_ate_formateado = his_date.strftime('%m/%d/%Y')
             else:
                 his_ate_formateado = ''

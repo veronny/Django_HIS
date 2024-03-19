@@ -1161,19 +1161,19 @@ def get_chart(_request):
     # Formatear los datos para pasarlos a la plantilla
     colors = ['#5470C6', '#91CC75', '#EE6666'];   
     
-    serie=['18060','18230']
+    serie=['18060','18230','16941']
     ## counter = 0
     ## while(counter<12):
     ##      serie.append(randrange(100,400))
     ##      counter += 1
 
-    serie2=['1710','832']
+    serie2=['1710','2266','1018']
     ## counter2 = 0
     ## while(counter2<12):
     ##     serie2.append(randrange(100,400))
     ##     counter2 += 1
         
-    serie3=['10.0','4.6']
+    serie3=['10.0','12.4','6.0']
     ## counter3 = 0
     ## while(counter3<12):
     ##     serie3.append(randrange(0,100))

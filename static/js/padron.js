@@ -1,6 +1,6 @@
 const getOptionChartPadron = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_edades/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_edades/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -9,7 +9,7 @@ const getOptionChartPadron = async () => {
 
 const getOptionChartPadronSexo = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_sexo/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_sexo/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -18,7 +18,7 @@ const getOptionChartPadronSexo = async () => {
 
 const getOptionChartPadronDNI = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_dni/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_dni/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -27,7 +27,7 @@ const getOptionChartPadronDNI = async () => {
 
 const getOptionChartPadronSeguro = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_seguro/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_seguro/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -36,7 +36,7 @@ const getOptionChartPadronSeguro = async () => {
 
 const getOptionChartPadronEncontrado = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_encontrado/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_encontrado/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -45,7 +45,7 @@ const getOptionChartPadronEncontrado = async () => {
 
 const getOptionChartPadronVisitado = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_visitado/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_visitado/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -54,7 +54,7 @@ const getOptionChartPadronVisitado = async () => {
 
 const getOptionChartPadronCelular = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_celular/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_celular/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -63,7 +63,7 @@ const getOptionChartPadronCelular = async () => {
 
 const getOptionChartPadronFrecuencia = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_frecuencia/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_frecuencia/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -72,7 +72,7 @@ const getOptionChartPadronFrecuencia = async () => {
 
 const getOptionChartPadronEntidad = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_entidad/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_entidad/");
         return await response.json();
     } catch (ex) {
         alert(ex);
@@ -81,7 +81,7 @@ const getOptionChartPadronEntidad = async () => {
 
 const getOptionChartPadronAtencion = async () => {
     try {
-        const response = await fetch("http://127.0.0.1:8000/padron_situacion/get_chart_padron_atencion/");
+        const response = await fetch("http://15.228.149.221/padron_situacion/get_chart_padron_atencion/");
         return await response.json();
     } catch (ex) {
         alert(ex);
